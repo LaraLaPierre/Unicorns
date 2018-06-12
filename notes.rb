@@ -27,3 +27,4 @@ def winning_move(board)
       board[7] == X && board[8] == X
       cell = 6
     end
+end 

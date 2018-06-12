@@ -10,14 +10,23 @@ attr_accessor :name, :marker
   end
 
   def computer_cell_choice(board, opponents_marker) 
+    center_space_avail(board) || winning_move(board) || corner_space_avail(board) 
 
-    @cell = nil 
-      if board[4] == "4"
-        @cell = 4 
-        return @cell
-      else
-        corner_space_avail(board)
-      end  
+    # center_space_avail(board) || block_move(board, opponents_marker) || winning_move(board) || corner_space_avail(board)
+
+
+
+    # @cell = nil 
+    #   if board[4] == "4"
+    #     @cell = 4 
+    #     return @cell
+    #   end 
+    #     if @cell == nil
+    #       corner_space_avail(board)
+    #     end 
+    #       if @cell == nil
+    #         winning_move(board)
+    #       end  
   end 
 
   # def eval_board(board)
@@ -37,6 +46,73 @@ attr_accessor :name, :marker
     return @cell
   end
 
+  def block_move(board, opponents_marker)
+    if 
+      board[0] == @player_1.marker && board[1] == @player_1.marker
+      cell = 2
+    elsif 
+      board[0] == @player_1.marker && board[2] == @player_1.marker
+      cell = 1
+    elsif
+      board[1] == @player_1.marker && board[2] == @player_1.marker
+      cell = 0
+    elsif 
+      board[3] == @player_1.marker && board[4] == @player_1.marker
+      cell = 5
+    elsif 
+      board[4] == @player_1.marker && board[5] == @player_1.marker
+      cell = 3
+    elsif 
+      board[5] == @player_1.marker && board[3] == @player_1.marker
+      cell = 4
+    elsif 
+      board[6] == @player_1.marker && board[7] == @player_1.marker
+      cell = 8
+    elsif 
+      board[6] == @player_1.marker && board[8] == @player_1.marker
+      cell = 7
+    elsif 
+      board[7] == @player_1.marker && board[8] == @player_1.marker
+      cell = 6
+    elsif 
+      board[0] == @player_1.marker && board[6] == @player_1.marker
+      cell = 3
+    elsif 
+      board[0] == @player_1.marker && board[3] == @player_1.marker
+      cell = 6
+    elsif 
+      board[3] == @player_1.marker && board[6] == @player_1.marker
+      cell = 0
+    elsif 
+      board[1] == @player_1.marker && board[4] == @player_1.marker
+      cell =7
+    elsif 
+      board[4] == @player_1.marker && board[7] == @player_1.marker
+      cell = 1
+    elsif 
+      board[1] == @player_1.marker && board[7] == @player_1.marker
+      cell = 4
+    elsif 
+      board[2] == @player_1.marker && board[5] == @player_1.marker
+      cell = 8
+    elsif 
+      board[2] == @player_1.marker && board[8] == @player_1.marker
+      cell = 5
+    elsif 
+      board[5] == @player_1.marker && board[8] == @player_1.marker
+      cell = 2
+    elsif 
+      board[0] == @player_1.marker && board[4] == @player_1.marker
+      cell = 8
+    elsif 
+      board[0] == @player_1.marker && board[8] == @player_1.marker
+      cell = 4
+    elsif 
+      board[8] == @player_1.marker && board[4] == @player_1.marker
+      cell = 0
+    end 
+  end 
+
   def corner_space_avail(board)
     @cell = nil 
       if board[0] == "0"
@@ -51,8 +127,75 @@ attr_accessor :name, :marker
       return cell 
   end 
 
-  def middle_space_avail(board)
+  def winning_move(board)
+    @cell = nil 
+    if 
+      board[0] == :X && board[1] == :X
+      cell = 2
+    elsif 
+      board[0] == :X && board[2] == :X
+      cell = 1
+    elsif
+      board[1] == :X && board[2] == :X
+      cell = 0
+    elsif 
+      board[3] == :X && board[4] == :X
+      cell = 5
+    elsif 
+      board[4] == :X && board[5] == :X
+      cell = 3
+    elsif 
+      board[5] == :X && board[3] == :X
+      cell = 4
+    elsif 
+      board[6] == :X && board[7] == :X
+      cell = 8
+    elsif 
+      board[6] == :X && board[8] == :X
+      cell = 7
+    elsif 
+      board[7] == :X && board[8] == :X
+      cell = 6
+    elsif 
+      board[0] == :X && board[6] == :X
+      cell = 3
+    elsif 
+      board[0] == :X && board[3] == :X
+      cell = 6
+    elsif 
+      board[3] == :X && board[6] == :X
+      cell = 0
+    elsif 
+      board[1] == :X && board[4] == :X
+      cell =7
+    elsif 
+      board[4] == :X && board[7] == :X
+      cell = 1
+    elsif 
+      board[1] == :X && board[7] == :X
+      cell = 4
+    elsif 
+      board[2] == :X && board[5] == :X
+      cell = 8
+    elsif 
+      board[2] == :X && board[8] == :X
+      cell = 5
+    elsif 
+      board[5] == :X && board[8] == :X
+      cell = 2
+    elsif 
+      board[0] == :X && board[4] == :X
+      cell = 8
+    elsif 
+      board[0] == :X && board[8] == :X
+      cell = 4
+    elsif 
+      board[8] == :X && board[4] == :X
+      cell = 0
+    end
+  end 
 
+  def middle_space_avail(board)
   end 
 
   # def get_best_move(board)
