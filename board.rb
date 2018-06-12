@@ -1,7 +1,7 @@
 require_relative "./player"
 require_relative "./computer"
 
-
+ 
 class Board 
   attr_accessor :board
   def initialize
@@ -14,32 +14,32 @@ class Board
 
   def add_marker(cell, marker)
         # IF marker_location_valid?
-        if within_valid_cell?(cell) || cell_available?(cell)
+        if within_valid_cell?(cell) && cell_available?(cell)
             # place marker
             @board[cell] = marker
         end
   end
 
   def within_valid_cell?(cell)
-        # UNLESS marker cell number is in the acceptible rangefalse
         if (0..8).include?(cell) 
-            true
+            return true
         else
             # display an error message
+            return false
             puts "Cell number is out of bounds"
-            false
+            
         end
   end
 
   # coordinates_available?
   def cell_available?(cell)
       # UNLESS marker cell is not occupied
-      if @board[cell].to_i 
-          true
+      if @board[cell].class != Integer 
+          return true
       else
           # display error message
           puts "There is already a marker there!"
-        false
+        return false
       end
   end
 

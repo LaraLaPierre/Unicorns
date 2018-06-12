@@ -1,41 +1,54 @@
 class Computer 
 attr_accessor :name, :marker
-
+ 
   # initialize
   def initialize(name = "Computer", marker)
     # Set marker type (e.g. X or O)
     raise "Marker must be a Symbol!" unless marker.is_a?(Symbol)
     @name = name
-    @marker = "O"
+    @marker = marker 
   end
 
   def computer_cell_choice(board, opponents_marker) 
-   cell = nil
+
+    @cell = nil 
       if board[4] == "4"
-        cell = 4 
-      end
-    return cell
+        @cell = 4 
+        return @cell
+      else
+        corner_space_avail(board)
+      end  
   end 
 
-  def eval_board(board)
-    center_space_avail
-    # elsif 
-    #   corner_space_avail
-    # else
-    #   middle_space_avail
+  # def eval_board(board)
+  #   center_space_avail
+  #   # elsif 
+  #   #   corner_space_avail
+  #   # else
+  #   #   middle_space_avail
 
-  end 
+  # end 
 
   def center_space_avail(board)
-    cell = nil
+    @cell = nil 
       if board[4] == "4"
-        cell = 4 
+        @cell = 4 
       end
-    return cell
+    return @cell
   end
 
   def corner_space_avail(board)
-
+    @cell = nil 
+      if board[0] == "0"
+        cell = 0
+      elsif board[2] == "2"
+        cell = 2
+      elsif board[6] == "6"
+        cell = 6 
+      elsif board[8] == "8"
+        cell = 8
+      end
+      return cell 
   end 
 
   def middle_space_avail(board)
