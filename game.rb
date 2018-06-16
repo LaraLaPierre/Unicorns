@@ -26,8 +26,9 @@ class Game
       print "Player 1, please enter your name.  ".colorize(:white)
       player_1_name = gets.chomp
       puts
-      print "#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
       puts "#{@computer.name}'s marker symbol is #{@computer.marker}.".colorize(:white)
+      sleep 1
+      print "#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
       player_1_marker_symbol = gets.chomp
    
       @player_1 = Player.new(player_1_name, player_1_marker_symbol.to_sym)
@@ -39,7 +40,7 @@ class Game
       puts
       puts "#{player_1_name} (#{player_1_marker_symbol}), you will go first.  ".colorize(:white)
       puts
-      puts "    ******  Let the game begin!  *****\n\n" .colorize(:white)
+      puts "    ******  Let the game begin!  *****\n\n" .center(50).colorize(:white)
       # first_player = @current_player
       # second_player = @computer
 
@@ -81,20 +82,31 @@ class Game
 
           # call the board rendering method
           @board.render
-          sleep 2
+          sleep 1
 
+          good_cell_choice = false
+          until good_cell_choice
           # ask for cell choice from the current player
             if @current_player != @computer
               cell = @current_player.get_cell_choice 
+              puts cell 
             else
               cell = @computer.computer_cell_choice(@board.board, @player_1.marker)
+              puts cell 
             end
+
+            if @board.within_valid_cell?(cell) && @board.cell_available?(cell)
+               good_cell_choice = true
+            end 
+          end
           puts 
           puts 
           @board.add_marker(cell, @current_player.marker)
-          puts "=".colorize(:white) * 60 
-          puts "                      UPDATED BOARD".colorize(:red)
-          puts "=".colorize(:white) * 60 
+          puts "=".colorize(:white) * 50 
+          puts "UPDATED BOARD".center(50).colorize(:red)
+          puts "=".colorize(:white) * 50 
+          puts
+          puts
           @board.render
           puts 
           puts 
@@ -113,9 +125,9 @@ class Game
           system "clear"
           switch_players
           puts 
-          puts "=".colorize(:white) * 60
-          puts "#{@current_player.name}, your turn \n"
-          puts "=".colorize(:white) * 60
+          puts "=".colorize(:white) * 50
+          puts "#{@current_player.name}, your turn!".center(50).colorize(:blue)
+          puts "=".colorize(:white) * 50
           puts
 
       end

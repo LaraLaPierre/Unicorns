@@ -9,19 +9,20 @@ class Board
   end 
 
   def render
-    puts "                #{@board[0]} | #{@board[1]} | #{@board[2]} \n               ===+===+===\n                #{@board[3]} | #{@board[4]} | #{@board[5]} \n               ===+===+===\n                #{@board[6]} | #{@board[7]} | #{@board[8]} \n"
+    puts "#{@board[0]} | #{@board[1]} | #{@board[2]}".center(50)              
+    puts "===+===+===".center(50)               
+    puts "#{@board[3]} | #{@board[4]} | #{@board[5]}".center(50)             
+    puts "===+===+===".center(50)               
+    puts "#{@board[6]} | #{@board[7]} | #{@board[8]}".center(50)
   end 
 
   def add_marker(cell, marker)
-        # IF marker_location_valid?
-        if within_valid_cell?(cell) && cell_available?(cell)
-            # place marker
-            @board[cell] = marker
-        end
+    # place marker
+    @board[cell] = marker   
   end
 
   def within_valid_cell?(cell)
-        if (0..8).include?(cell) 
+        if (0..8).include?(cell.to_i) 
             return true
         else
             # display an error message
@@ -34,8 +35,9 @@ class Board
   # coordinates_available?
   def cell_available?(cell)
       # UNLESS marker cell is not occupied
-      if @board[cell].class != Integer 
-          return true
+      if @board[cell].class != Symbol 
+        puts @board[cell].class
+        return true
       else
           # display error message
           puts "There is already a marker there!"

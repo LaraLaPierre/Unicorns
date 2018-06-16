@@ -41,67 +41,67 @@ attr_accessor :name, :marker
   def block_move(board, opponents_marker)
     @cell = nil
     if 
-      board[0] == opponents_marker && board[1] == opponents_marker
+      board[0] == opponents_marker && board[1] == opponents_marker && board[2].class != Symbol
       cell = 2
     elsif 
-      board[0] == opponents_marker && board[2] == opponents_marker
+      board[0] == opponents_marker && board[2] == opponents_marker && board[1].class != Symbol
       cell = 1
     elsif
-      board[1] == opponents_marker && board[2] == opponents_marker
+      board[1] == opponents_marker && board[2] == opponents_marker && board[0].class != Symbol
       cell = 0
     elsif 
-      board[3] == opponents_marker && board[4] == opponents_marker
+      board[3] == opponents_marker && board[4] == opponents_marker && board[5].class != Symbol
       cell = 5
     elsif 
-      board[4] == opponents_marker && board[5] == opponents_marker
+      board[4] == opponents_marker && board[5] == opponents_marker && board[3].class != Symbol
       cell = 3
     elsif 
-      board[5] == opponents_marker && board[3] == opponents_marker
+      board[5] == opponents_marker && board[3] == opponents_marker && board[4].class != Symbol
       cell = 4
     elsif 
-      board[6] == opponents_marker && board[7] == opponents_marker
+      board[6] == opponents_marker && board[7] == opponents_marker && board[8].class != Symbol
       cell = 8
     elsif 
-      board[6] == opponents_marker && board[8] == opponents_marker
+      board[6] == opponents_marker && board[8] == opponents_marker && board[7].class != Symbol
       cell = 7
     elsif 
-      board[7] == opponents_marker && board[8] == opponents_marker
+      board[7] == opponents_marker && board[8] == opponents_marker && board[6].class != Symbol
       cell = 6
     elsif 
-      board[0] == opponents_marker && board[6] == opponents_marker
+      board[0] == opponents_marker && board[6] == opponents_marker && board[3].class != Symbol
       cell = 3
     elsif 
-      board[0] == opponents_marker && board[3] == opponents_marker
+      board[0] == opponents_marker && board[3] == opponents_marker && board[6].class != Symbol
       cell = 6
     elsif 
-      board[3] == opponents_marker && board[6] == opponents_marker
+      board[3] == opponents_marker && board[6] == opponents_marker && board[0].class != Symbol
       cell = 0
     elsif 
-      board[1] == opponents_marker && board[4] == opponents_marker
+      board[1] == opponents_marker && board[4] == opponents_marker && board[7].class != Symbol
       cell =7
     elsif 
-      board[4] == opponents_marker && board[7] == opponents_marker
+      board[4] == opponents_marker && board[7] == opponents_marker && board[1].class != Symbol
       cell = 1
     elsif 
-      board[1] == opponents_marker && board[7] == opponents_marker
+      board[1] == opponents_marker && board[7] == opponents_marker && board[4].class != Symbol
       cell = 4
     elsif 
-      board[2] == opponents_marker && board[5] == opponents_marker
+      board[2] == opponents_marker && board[5] == opponents_marker && board[8].class != Symbol
       cell = 8
     elsif 
-      board[2] == opponents_marker && board[8] == opponents_marker
+      board[2] == opponents_marker && board[8] == opponents_marker && board[5].class != Symbol
       cell = 5
     elsif 
-      board[5] == opponents_marker && board[8] == opponents_marker
+      board[5] == opponents_marker && board[8] == opponents_marker && board[2].class != Symbol
       cell = 2
     elsif 
-      board[0] == opponents_marker && board[4] == opponents_marker
+      board[0] == opponents_marker && board[4] == opponents_marker && board[8].class != Symbol
       cell = 8
     elsif 
-      board[0] == opponents_marker && board[8] == opponents_marker
+      board[0] == opponents_marker && board[8] == opponents_marker && board[4].class != Symbol
       cell = 4
     elsif 
-      board[8] == opponents_marker && board[4] == opponents_marker
+      board[8] == opponents_marker && board[4] == opponents_marker && board[0].class != Symbol
       cell = 0
     end 
     return cell
@@ -124,67 +124,67 @@ attr_accessor :name, :marker
   def winning_move(board)
     @cell = nil 
     if 
-      board[0] == :X && board[1] == :X
+      board[0] == :X && board[1] == :X && board[2].class != Symbol
       cell = 2
     elsif 
-      board[0] == :X && board[2] == :X
+      board[0] == :X && board[2] == :X && board[1].class != Symbol
       cell = 1
     elsif
-      board[1] == :X && board[2] == :X
+      board[1] == :X && board[2] == :X && board[0].class != Symbol
       cell = 0
     elsif 
-      board[3] == :X && board[4] == :X
+      board[3] == :X && board[4] == :X && board[5].class != Symbol
       cell = 5
     elsif 
-      board[4] == :X && board[5] == :X
+      board[4] == :X && board[5] == :X && board[3].class != Symbol
       cell = 3
     elsif 
-      board[5] == :X && board[3] == :X
+      board[5] == :X && board[3] == :X && board[4].class != Symbol
       cell = 4
     elsif 
-      board[6] == :X && board[7] == :X
+      board[6] == :X && board[7] == :X && board[8].class != Symbol
       cell = 8
     elsif 
-      board[6] == :X && board[8] == :X
+      board[6] == :X && board[8] == :X && board[7].class != Symbol
       cell = 7
     elsif 
-      board[7] == :X && board[8] == :X
+      board[7] == :X && board[8] == :X && board[6].class != Symbol
       cell = 6
     elsif 
-      board[0] == :X && board[6] == :X
+      board[0] == :X && board[6] == :X && board[3].class != Symbol
       cell = 3
     elsif 
-      board[0] == :X && board[3] == :X
+      board[0] == :X && board[3] == :X && board[6].class != Symbol
       cell = 6
     elsif 
-      board[3] == :X && board[6] == :X
+      board[3] == :X && board[6] == :X && board[0].class != Symbol
       cell = 0
     elsif 
-      board[1] == :X && board[4] == :X
+      board[1] == :X && board[4] == :X && board[7].class != Symbol
       cell =7
     elsif 
-      board[4] == :X && board[7] == :X
+      board[4] == :X && board[7] == :X && board[1].class != Symbol
       cell = 1
     elsif 
-      board[1] == :X && board[7] == :X
+      board[1] == :X && board[7] == :X && board[4].class != Symbol
       cell = 4
     elsif 
-      board[2] == :X && board[5] == :X
+      board[2] == :X && board[5] == :X && board[8].class != Symbol
       cell = 8
     elsif 
-      board[2] == :X && board[8] == :X
+      board[2] == :X && board[8] == :X && board[5].class != Symbol
       cell = 5
     elsif 
-      board[5] == :X && board[8] == :X
+      board[5] == :X && board[8] == :X && board[2].class != Symbol
       cell = 2
     elsif 
-      board[0] == :X && board[4] == :X
+      board[0] == :X && board[4] == :X && board[8].class != Symbol
       cell = 8
     elsif 
-      board[0] == :X && board[8] == :X
+      board[0] == :X && board[8] == :X && board[4].class != Symbol
       cell = 4
     elsif 
-      board[8] == :X && board[4] == :X
+      board[8] == :X && board[4] == :X && board[0].class != Symbol
       cell = 0
     end
   end 
