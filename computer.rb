@@ -10,33 +10,25 @@ attr_accessor :name, :marker
   end
 
   def computer_cell_choice(board, opponents_marker) 
-    center_space_avail(board) || winning_move(board) || corner_space_avail(board) 
-
-    # center_space_avail(board) || block_move(board, opponents_marker) || winning_move(board) || corner_space_avail(board)
-
-
-
-    # @cell = nil 
-    #   if board[4] == "4"
-    #     @cell = 4 
-    #     return @cell
-    #   end 
-    #     if @cell == nil
-    #       corner_space_avail(board)
-    #     end 
-    #       if @cell == nil
-    #         winning_move(board)
-    #       end  
+    # center_space_avail(board) || winning_move(board) || corner_space_avail(board) 
+    @cell = nil
+    @cell = center_space_avail(board) 
+    if @cell != nil
+      return @cell
+    end 
+    @cell = winning_move(board)
+    if @cell != nil
+      return @cell
+    end 
+    @cell = block_move(board, opponents_marker)
+    if @cell != nil
+      return @cell
+    end
+    @cell = corner_space_avail(board)
+    if @cell != nil
+      return @cell
+    end  
   end 
-
-  # def eval_board(board)
-  #   center_space_avail
-  #   # elsif 
-  #   #   corner_space_avail
-  #   # else
-  #   #   middle_space_avail
-
-  # end 
 
   def center_space_avail(board)
     @cell = nil 
@@ -47,70 +39,72 @@ attr_accessor :name, :marker
   end
 
   def block_move(board, opponents_marker)
+    @cell = nil
     if 
-      board[0] == @player_1.marker && board[1] == @player_1.marker
+      board[0] == opponents_marker && board[1] == opponents_marker
       cell = 2
     elsif 
-      board[0] == @player_1.marker && board[2] == @player_1.marker
+      board[0] == opponents_marker && board[2] == opponents_marker
       cell = 1
     elsif
-      board[1] == @player_1.marker && board[2] == @player_1.marker
+      board[1] == opponents_marker && board[2] == opponents_marker
       cell = 0
     elsif 
-      board[3] == @player_1.marker && board[4] == @player_1.marker
+      board[3] == opponents_marker && board[4] == opponents_marker
       cell = 5
     elsif 
-      board[4] == @player_1.marker && board[5] == @player_1.marker
+      board[4] == opponents_marker && board[5] == opponents_marker
       cell = 3
     elsif 
-      board[5] == @player_1.marker && board[3] == @player_1.marker
+      board[5] == opponents_marker && board[3] == opponents_marker
       cell = 4
     elsif 
-      board[6] == @player_1.marker && board[7] == @player_1.marker
+      board[6] == opponents_marker && board[7] == opponents_marker
       cell = 8
     elsif 
-      board[6] == @player_1.marker && board[8] == @player_1.marker
+      board[6] == opponents_marker && board[8] == opponents_marker
       cell = 7
     elsif 
-      board[7] == @player_1.marker && board[8] == @player_1.marker
+      board[7] == opponents_marker && board[8] == opponents_marker
       cell = 6
     elsif 
-      board[0] == @player_1.marker && board[6] == @player_1.marker
+      board[0] == opponents_marker && board[6] == opponents_marker
       cell = 3
     elsif 
-      board[0] == @player_1.marker && board[3] == @player_1.marker
+      board[0] == opponents_marker && board[3] == opponents_marker
       cell = 6
     elsif 
-      board[3] == @player_1.marker && board[6] == @player_1.marker
+      board[3] == opponents_marker && board[6] == opponents_marker
       cell = 0
     elsif 
-      board[1] == @player_1.marker && board[4] == @player_1.marker
+      board[1] == opponents_marker && board[4] == opponents_marker
       cell =7
     elsif 
-      board[4] == @player_1.marker && board[7] == @player_1.marker
+      board[4] == opponents_marker && board[7] == opponents_marker
       cell = 1
     elsif 
-      board[1] == @player_1.marker && board[7] == @player_1.marker
+      board[1] == opponents_marker && board[7] == opponents_marker
       cell = 4
     elsif 
-      board[2] == @player_1.marker && board[5] == @player_1.marker
+      board[2] == opponents_marker && board[5] == opponents_marker
       cell = 8
     elsif 
-      board[2] == @player_1.marker && board[8] == @player_1.marker
+      board[2] == opponents_marker && board[8] == opponents_marker
       cell = 5
     elsif 
-      board[5] == @player_1.marker && board[8] == @player_1.marker
+      board[5] == opponents_marker && board[8] == opponents_marker
       cell = 2
     elsif 
-      board[0] == @player_1.marker && board[4] == @player_1.marker
+      board[0] == opponents_marker && board[4] == opponents_marker
       cell = 8
     elsif 
-      board[0] == @player_1.marker && board[8] == @player_1.marker
+      board[0] == opponents_marker && board[8] == opponents_marker
       cell = 4
     elsif 
-      board[8] == @player_1.marker && board[4] == @player_1.marker
+      board[8] == opponents_marker && board[4] == opponents_marker
       cell = 0
     end 
+    return cell
   end 
 
   def corner_space_avail(board)

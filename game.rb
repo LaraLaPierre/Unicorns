@@ -39,7 +39,7 @@ class Game
       puts
       puts "#{player_1_name} (#{player_1_marker_symbol}), you will go first.  ".colorize(:white)
       puts
-      puts "          ******  Let the game begin!  *****\n\n" .colorize(:white)
+      puts "    ******  Let the game begin!  *****\n\n" .colorize(:white)
       # first_player = @current_player
       # second_player = @computer
 
