@@ -28,6 +28,7 @@ class Game
       puts
       puts "#{@computer.name}'s marker symbol is #{@computer.marker}.".colorize(:white)
       sleep 1
+      puts
       print "#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
       player_1_marker_symbol = gets.chomp
    
@@ -78,59 +79,56 @@ class Game
 
 
   def start_game 
-      until @game_over
+  #loop until there is a winner, or a tie
+  @board = Board.new
+  until @game_over
 
-          # call the board rendering method
-          @board.render
-          sleep 1
+    #display the game board 
+    @board.render
+    sleep 1
+    good_cell_choice = false
 
-          good_cell_choice = false
-          until good_cell_choice
-          # ask for cell choice from the current player
-            if @current_player != @computer
-              cell = @current_player.get_cell_choice 
-              puts cell 
-            else
-              cell = @computer.computer_cell_choice(@board.board, @player_1.marker)
-              puts cell 
-            end
-
-            if @board.within_valid_cell?(cell) && @board.cell_available?(cell)
-               good_cell_choice = true
-            end 
-          end
-          puts 
-          puts 
-          @board.add_marker(cell, @current_player.marker)
-          puts "=".colorize(:white) * 50 
-          puts "UPDATED BOARD".center(50).colorize(:red)
-          puts "=".colorize(:white) * 50 
-          puts
-          puts
-          @board.render
-          puts 
-          puts 
-          # system "clear"
-          # puts "============"
-          # puts @computer.name
-
-          if check_game_over
-            break
-          end 
-          # check if game is over
-          # switch players 
-          puts
-          puts "Press ENTER to continue".colorize(:white)
-          gets
-          system "clear"
-          switch_players
-          puts 
-          puts "=".colorize(:white) * 50
-          puts "#{@current_player.name}, your turn!".center(50).colorize(:blue)
-          puts "=".colorize(:white) * 50
-          puts
-
+    until good_cell_choice
+    # ask for cell choice from the current player
+      if @current_player != @computer
+        cell = @current_player.get_cell_choice 
+      else
+        cell = @computer.computer_cell_choice(@board.board, @player_1.marker) 
       end
+      #validate cell choice
+      if @board.within_valid_cell?(cell) && @board.cell_available?(cell)
+         good_cell_choice = true
+      end 
+    end
+      puts 
+      puts 
+      @board.add_marker(cell, @current_player.marker)
+      puts "=".colorize(:white) * 50 
+      puts "U P D A T E D  B O A R D".center(50).colorize(:white)
+      puts "#{@current_player.name} chose ##{cell}".center(50).colorize(:blue)
+      puts "=".colorize(:white) * 50 
+      puts
+      puts
+      #display updated board with latest move
+      @board.render
+      puts 
+      puts 
+      #check if there is a win or a tie
+      if check_game_over
+        break
+      end 
+
+      puts
+      puts "Press ENTER to continue".colorize(:white)
+      gets
+      system "clear"
+      switch_players
+      puts 
+      puts "=".colorize(:white) * 50
+      puts "#{@current_player.name}, your turn!".center(50).colorize(:blue)
+      puts "=".colorize(:white) * 50
+      puts
+    end
   end
 
 
@@ -141,29 +139,70 @@ class Game
 
   # check_victory?
   def check_victory(board)
-      # IF Board says current player's marker has
-      # a winning_combination?
-      if @board.winning_combination? == true
-          # then output a victory message
-          puts "Congratulations #{@current_player.name}, you win!"
-          @game_over = true
-          true
-      else
-          false
+    # IF Board says current player's marker has a winning combination
+    if @board.winning_combination? == true
+      # then output a victory message
+      puts "=".colorize(:white) * 50 
+      puts "Congratulations #{@current_player.name}, you win!".center(50).colorize(:orange).blink
+      puts "=".colorize(:white) * 50 
+      @game_over = true
+      true
+      puts
+      print "Would you like to play Robot again?  Y/N ".center(50).colorize(:red)
+      response = gets.chomp
+      if response == "Y" || "y"
+        start_game
+        @game_over = false
+      end 
+      if response == "N" || "n" 
+      system "clear"
+      puts
+      puts "=".colorize(:white) * 50 
+      puts "=".colorize(:white) * 50 
+      puts
+      puts "Thanks for playing!\n".center(50).colorize(:blue)
+      puts "See you next time for another rousing game of".center(50).colorize(:color => :light_blue, :background => :white)
+      puts "TIC TAC TOE!".center(50).colorize(:color => :light_blue, :background => :white)
+      puts
+      puts "=".colorize(:white) * 50 
+      puts "=".colorize(:white) * 50 
+      exit 
       end
+    else
+      false
+    end
   end
 
-  # check_draw?
   def check_draw(board)
-      # If Board says we've filled up 
-      if @board.full?
-          # display draw message
-          puts "Game ends with a tie!"
-          @game_over = true
-          true
-      else
-          false
+    # If board is full of markers
+    if @board.full?
+      # display draw message
+      puts "=".colorize(:white) * 50 
+      puts "Game ends with a tie!".center(50).colorize(:orange).blink
+      puts "=".colorize(:white) * 50 
+      @game_over = true
+      true
+      print "Would you like to play Robot again?  Y/N:   "
+      response = gets.chomp
+      if response == "Y" || "y"
+        start_game
+        @game_over = false
+      end 
+      if response == "N" || "n"
+      system "clear"
+      puts "=".colorize(:white) * 50 
+      puts "=".colorize(:white) * 50 
+      puts
+      puts "Thanks for playing!\n".center(50).colorize(:blue)
+      puts "See you next time for another rousing game of TIC TAC TOE!".center(50).colorize(:color => :light_blue, :background => :white)
+      puts
+      puts "=".colorize(:white) * 50 
+      puts "=".colorize(:white) * 50 
+      exit 
       end
+    else
+        false
+    end
   end
 
   # switch_players

@@ -17,61 +17,53 @@ class Board
   end 
 
   def add_marker(cell, marker)
-    # place marker
+    # place marker on board
     @board[cell] = marker   
   end
 
   def within_valid_cell?(cell)
-        if (0..8).include?(cell.to_i) 
-            return true
-        else
-            # display an error message
-            return false
-            puts "Cell number is out of bounds"
-            
-        end
-  end
-
-  # coordinates_available?
-  def cell_available?(cell)
-      # UNLESS marker cell is not occupied
-      if @board[cell].class != Symbol 
-        puts @board[cell].class
+    #check if input is a valid cell
+    if (0..8).include?(cell.to_i) 
         return true
-      else
-          # display error message
-          puts "There is already a marker there!"
-        return false
-      end
+    else
+      # display an error message
+      puts
+      puts "Oops! That cell number does not exist, try again!".colorize(:red)
+      sleep 3
+      return false
+      
+    end
   end
 
-  # winning_combination?
+  def cell_available?(cell)
+    # check if cell already has a marker
+    if @board[cell].class != Symbol 
+      return true
+    else
+      # display error message
+      puts
+      puts "Oops! There is already a marker there, try again!".colorize(:red)
+      sleep 3
+      return false
+      
+    end
+  end
+
   def winning_combination?()
-      # is there a winning_diagonal?
-      # or winning_vertical? 
-      # or winning_horizontal? for that piece?
-      # winning_diagonal?(piece)   || 
-      # winning_horizontal?(piece) || 
-      # winning_vertical?(piece)
-      # board = @board
-      [board[0], board[1], board[2]].uniq.length == 1 ||
-      [board[3], board[4], board[5]].uniq.length == 1 ||
-      [board[6], board[7], board[8]].uniq.length == 1 ||
-      [board[0], board[3], board[6]].uniq.length == 1 ||
-      [board[1], board[4], board[7]].uniq.length == 1 ||
-      [board[2], board[5], board[8]].uniq.length == 1 ||
-      [board[0], board[4], board[8]].uniq.length == 1 ||
-      [board[2], board[4], board[6]].uniq.length == 1
+    # is there a winning diagonal, vertical or horizontal?
+    [board[0], board[1], board[2]].uniq.length == 1 ||
+    [board[3], board[4], board[5]].uniq.length == 1 ||
+    [board[6], board[7], board[8]].uniq.length == 1 ||
+    [board[0], board[3], board[6]].uniq.length == 1 ||
+    [board[1], board[4], board[7]].uniq.length == 1 ||
+    [board[2], board[5], board[8]].uniq.length == 1 ||
+    [board[0], board[4], board[8]].uniq.length == 1 ||
+    [board[2], board[4], board[6]].uniq.length == 1
   end
 
-  # full?
   def full?
-      # does every cell contain a marker?
-      # @board.each do |cell|
-      #     cell.none?(&:nil?)
-      # end
-      @board.select{|cell| cell.class == Symbol }.length == 9
-      # b.all? { |s| s == "X" || s == "O" }
+    # does every cell contain a marker?
+    @board.select{|cell| cell.class == Symbol }.length == 9
   end
 
 end 
