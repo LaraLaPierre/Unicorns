@@ -6,10 +6,11 @@ require "colorize"
  
 class Game
   def initialize
+    #display welcome message and call game_setup method
     system "clear"
 
     puts "=".colorize(:white) * 60
-    puts "              WELCOME TO LARA'S TIC TAC TOE GAME!           ".colorize(:color => :light_blue, :background => :white)
+    puts "WELCOME TO LARA'S TIC TAC TOE GAME!".center(60).colorize(:color => :light_blue, :background => :white)
     puts "=".colorize(:white) * 60
     puts 
     puts
@@ -19,6 +20,7 @@ class Game
   end
 
   def game_setup
+    #decide game_play options, instantiate game, players, board 
     puts "Please choose the number of players:\n \n (0) Computer vs. Computer\n (1) Human vs. Computer\n (2) Human vs. Human".colorize(:white)
     puts
     @game_play = gets.chomp
@@ -27,7 +29,10 @@ class Game
     if @game_play == "1"
       system "clear"
       @computer = Computer.new("Robot", :X)
-      puts "You've chosen to play against #{@computer.name}, the Computer!\n".colorize(:white)
+      puts
+      puts
+      puts
+      puts "You've chosen to play against #{@computer.name}, the Computer!\n".colorize(:blue)
       print "Player 1, please enter your name.  ".colorize(:white)
       player_1_name = gets.chomp
       puts
@@ -45,32 +50,34 @@ class Game
 
       puts
       puts "#{player_1_name} (#{player_1_marker_symbol}), you will go first.  ".colorize(:white)
-      puts
-      puts "    ******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
+      
       # first_player = @current_player
       # second_player = @computer
 
     elsif @game_play == "2"
-      puts "You've chosen to a two player game!"
+      system "clear"
       puts
-      print "Please enter Player 1 name.  "
+      puts 
+      puts
+      puts "You've chosen to play a two player game!\n".colorize(:blue)
+      print "Player 1, please enter your name.  ".colorize(:white)
       player_1_name = gets.chomp
       puts
-      print "Please enter Player 2 name.  "
+      print "#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
+      player_1_marker_symbol = gets.chomp
+      system "clear"
+      print "Player 2, please enter your name.  ".colorize(:white)
       player_2_name = gets.chomp
       puts
-      print "#{player_1_name}, enter your desired marker symbol.  "
-      player_1_marker_symbol = gets.chomp
-      puts
-      print "#{player_2_name}, enter your desired marker symbol.  "
+      print "#{player_2_name}, enter your desired marker symbol.  ".colorize(:white)
       player_2_marker_symbol = gets.chomp
+      system "clear"
       @player_1 = Player.new(player_1_name, player_1_marker_symbol.to_sym)
       @player_2 = Player.new(player_2_name, player_2_marker_symbol.to_sym)
-
+      puts 
       puts
-      puts "Who would like to go first?  "
-      puts "Select 1 for #{@player_1.name}"
-      puts "Select 2 for #{@player_2.name}"
+      puts "#{@player_1.name} and #{@player_2.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@player_2.name}".colorize(:white)
+      
 
       first_player = gets.chomp.to_i
 
@@ -80,61 +87,68 @@ class Game
         first_player == 2
         @current_player = @player_2
       end 
+
     end 
+    system "clear"
+    puts
+    puts "    ******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
+    start_game
   end 
 
 
   def start_game 
-  #loop until there is a winner, or a tie
-  @board = Board.new
-  until @game_over
+    #loop until there is a winner, or a tie
+    @board = Board.new
+    until @game_over
 
-    #display the game board 
-    @board.render
-    sleep 1
-    good_cell_choice = false
-
-    until good_cell_choice
-    # ask for cell choice from the current player
-      if @current_player != @computer
-        cell = @current_player.get_cell_choice 
-      else
-        cell = @computer.computer_cell_choice(@board.board, @player_1.marker) 
-      end
-      #validate cell choice
-      if @board.within_valid_cell?(cell) && @board.cell_available?(cell)
-         good_cell_choice = true
-      end 
-    end
-      puts 
-      puts 
-      @board.add_marker(cell, @current_player.marker)
-      puts "=".colorize(:white) * 50 
-      puts "U P D A T E D  B O A R D".center(50).colorize(:green)
-      puts "#{@current_player.name} chose ##{cell}".center(50).colorize(:blue)
-      puts "=".colorize(:white) * 50 
-      puts
-      puts
-      #display updated board with latest move
+      #display the game board 
       @board.render
-      puts 
-      puts 
-      #check if there is a win or a tie
-      if check_game_over
-        break
-      end 
+      sleep 1
+      good_cell_choice = false
 
-      puts
-      puts "Press ENTER to continue".center(50).colorize(:green)
-      gets
-      system "clear"
-      switch_players
-      puts 
-      puts "=".colorize(:white) * 50
-      puts "#{@current_player.name}, your turn!".center(50).colorize(:blue)
-      puts "=".colorize(:white) * 50
-      puts
-    end
+      until good_cell_choice
+      # ask for cell choice from the current player
+        if @current_player != @computer
+          cell = @current_player.get_cell_choice 
+        else
+          cell = @computer.computer_cell_choice(@board.board, @player_1.marker) 
+        end
+        #validate cell choice
+        if @board.within_valid_cell?(cell) && @board.cell_available?(cell)
+           good_cell_choice = true
+        end 
+      end
+        puts 
+        puts 
+        #add current_player marker to board
+        @board.add_marker(cell, @current_player.marker)
+        puts "=".colorize(:white) * 50 
+        puts "U P D A T E D  B O A R D".center(50).colorize(:green)
+        puts "#{@current_player.name} chose ##{cell}".center(50).colorize(:blue)
+        puts "=".colorize(:white) * 50 
+        puts
+        puts
+        #display updated board with latest marker added
+        @board.render
+        puts 
+        puts 
+        #check if there is a win or a tie
+        if check_game_over
+          break
+        end 
+
+        puts
+        puts "Press ENTER to continue".center(50).colorize(:green)
+        gets
+        system "clear"
+        #switch players
+        switch_players
+        puts 
+        puts "=".colorize(:white) * 50
+        puts "#{@current_player.name}, your turn!".center(50).colorize(:blue)
+        puts "=".colorize(:white) * 50
+        puts
+      end
   end
 
 
@@ -201,8 +215,7 @@ class Game
       response = gets.chomp
     end 
     if response.downcase == "y"
-      system "clear"
-      puts "testing yes" 
+      system "clear" 
       @game_over = false
       puts "=".colorize(:white) * 50 
       puts "N E W  G A M E".center(50).colorize(:blue)
@@ -210,7 +223,6 @@ class Game
       puts
       start_game
     elsif response.downcase == "n"
-      puts "testing no"
       @game_over = true
       system "clear"
       puts "=".colorize(:white) * 50 
@@ -231,4 +243,4 @@ class Game
 end
 
 game = Game.new
-game.start_game
+game.game_setup
