@@ -14,6 +14,11 @@ class Game
     puts 
     puts
 
+    game_setup
+     
+  end
+
+  def game_setup
     puts "Please choose the number of players:\n \n (0) Computer vs. Computer\n (1) Human vs. Computer\n (2) Human vs. Human".colorize(:white)
     puts
     game_play = gets.chomp
@@ -31,7 +36,7 @@ class Game
       puts
       print "#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
       player_1_marker_symbol = gets.chomp
-   
+    
       @player_1 = Player.new(player_1_name, player_1_marker_symbol.to_sym)
       @board = Board.new
       @game_over = false
@@ -68,12 +73,7 @@ class Game
         first_player == player_2_name
         second_player == player_1_name
       end 
-    end  
-     
-  end
-
-  def game_setup
-
+    end 
 
   end 
 
@@ -132,42 +132,23 @@ class Game
   end
 
 
-  # check_game_over?
   def check_game_over
-    check_victory(@board) || check_draw(@board)
+  # check if the game is over, and if so, want to play again
+    if check_victory(@board) || check_draw(@board)
+      puts
+      play_again
+    end 
   end
 
-  # check_victory?
   def check_victory(board)
     # IF Board says current player's marker has a winning combination
     if @board.winning_combination? == true
       # then output a victory message
       puts "=".colorize(:white) * 50 
-      puts "Congratulations #{@current_player.name}, you win!".center(50).colorize(:orange).blink
+      puts "Congratulations #{@current_player.name}, you win!".center(50).colorize(:color => :light_blue, :background => :white).blink
+      puts "G A M E  O V E R".center(50).colorize(:color => :light_blue, :background => :white)
       puts "=".colorize(:white) * 50 
       @game_over = true
-      true
-      puts
-      print "Would you like to play Robot again?  Y/N ".center(50).colorize(:red)
-      response = gets.chomp
-      if response == "Y" || "y"
-        start_game
-        @game_over = false
-      end 
-      if response == "N" || "n" 
-      system "clear"
-      puts
-      puts "=".colorize(:white) * 50 
-      puts "=".colorize(:white) * 50 
-      puts
-      puts "Thanks for playing!\n".center(50).colorize(:blue)
-      puts "See you next time for another rousing game of".center(50).colorize(:color => :light_blue, :background => :white)
-      puts "TIC TAC TOE!".center(50).colorize(:color => :light_blue, :background => :white)
-      puts
-      puts "=".colorize(:white) * 50 
-      puts "=".colorize(:white) * 50 
-      exit 
-      end
     else
       false
     end
@@ -178,34 +159,15 @@ class Game
     if @board.full?
       # display draw message
       puts "=".colorize(:white) * 50 
-      puts "Game ends with a tie!".center(50).colorize(:orange).blink
+      puts "Game ends with a tie!".center(50).colorize(:blue).blink
       puts "=".colorize(:white) * 50 
       @game_over = true
       true
-      print "Would you like to play Robot again?  Y/N:   "
-      response = gets.chomp
-      if response == "Y" || "y"
-        start_game
-        @game_over = false
-      end 
-      if response == "N" || "n"
-      system "clear"
-      puts "=".colorize(:white) * 50 
-      puts "=".colorize(:white) * 50 
-      puts
-      puts "Thanks for playing!\n".center(50).colorize(:blue)
-      puts "See you next time for another rousing game of TIC TAC TOE!".center(50).colorize(:color => :light_blue, :background => :white)
-      puts
-      puts "=".colorize(:white) * 50 
-      puts "=".colorize(:white) * 50 
-      exit 
-      end
     else
         false
     end
   end
 
-  # switch_players
   def switch_players
       if @current_player == @player_1
           @current_player = @computer
@@ -213,6 +175,37 @@ class Game
           @current_player = @player_1
       end
   end
+
+  def play_again
+    print "Would you like to play Robot again?  Y/N:   ".center(50).colorize(:red)
+    response = gets.chomp
+    if response.downcase == "y"
+      system "clear"
+      puts "testing yes" 
+      @game_over = false
+      puts "=".colorize(:white) * 50 
+      puts "N E W  G A M E".center(50).colorize(:blue)
+      puts "=".colorize(:white) * 50 
+      puts
+      start_game
+    elsif response.downcase == "n"
+      puts "testing no"
+      @game_over = true
+      system "clear"
+      puts "=".colorize(:white) * 50 
+      puts "=".colorize(:white) * 50 
+      puts " ".colorize(:white) * 50 
+      puts " ".colorize(:white) * 50
+      puts "Thanks for playing!\n".center(50).colorize(:blue)
+      puts "See you next time for another rousing game of".center(50).colorize(:color => :light_blue, :background => :white)
+      puts "TIC TAC TOE!".center(50).colorize(:color => :light_blue, :background => :white)
+      puts " ".colorize(:white) * 50 
+      puts " ".colorize(:white) * 50
+      puts "=".colorize(:white) * 50 
+      puts "=".colorize(:white) * 50 
+      exit
+    end
+  end 
 
 end
 
