@@ -21,10 +21,10 @@ class Game
   def game_setup
     puts "Please choose the number of players:\n \n (0) Computer vs. Computer\n (1) Human vs. Computer\n (2) Human vs. Human".colorize(:white)
     puts
-    game_play = gets.chomp
+    @game_play = gets.chomp
     puts
 
-    if game_play == "1"
+    if @game_play == "1"
       system "clear"
       @computer = Computer.new("Robot", :X)
       puts "You've chosen to play against #{@computer.name}, the Computer!\n".colorize(:white)
@@ -50,7 +50,7 @@ class Game
       # first_player = @current_player
       # second_player = @computer
 
-    elsif game_play == "2"
+    elsif @game_play == "2"
       puts "You've chosen to a two player game!"
       puts
       print "Please enter Player 1 name.  "
@@ -64,17 +64,23 @@ class Game
       puts
       print "#{player_2_name}, enter your desired marker symbol.  "
       player_2_marker_symbol = gets.chomp
+      @player_1 = Player.new(player_1_name, player_1_marker_symbol.to_sym)
+      @player_2 = Player.new(player_2_name, player_2_marker_symbol.to_sym)
+
       puts
-      print "Who would like to go first?  "
-      first_player = gets.chomp
-      if first_player == player_1_name
-        second_player = player_2_name
+      puts "Who would like to go first?  "
+      puts "Select 1 for #{@player_1.name}"
+      puts "Select 2 for #{@player_2.name}"
+
+      first_player = gets.chomp.to_i
+
+      if first_player == 1
+        @current_player = @player_1
       elsif 
-        first_player == player_2_name
-        second_player == player_1_name
+        first_player == 2
+        @current_player = @player_2
       end 
     end 
-
   end 
 
 
@@ -133,7 +139,7 @@ class Game
 
 
   def check_game_over
-  # check if the game is over, and if so, want to play again
+   # check if the game is over, and if so, want to play again
     if check_victory(@board) || check_draw(@board)
       puts
       play_again
@@ -170,16 +176,30 @@ class Game
   end
 
   def switch_players
+    if @game_play.to_i == 2
       if @current_player == @player_1
-          @current_player = @computer
+        @current_player = @player_2
       else
-          @current_player = @player_1
+        @current_player = @player_1
       end
+    elsif @game_play.to_i == 1
+      if @current_player == @player_1
+        @current_player = @computer
+      else
+        @current_player = @player_1
+      end
+      
+    end 
   end
 
   def play_again
-    print "Would you like to play Robot again?  Y/N:   ".center(50).colorize(:red)
-    response = gets.chomp
+    if @game_play.to_i == 1
+      print "Would you like to play Robot again?  Y/N:   ".center(50).colorize(:red)
+      response = gets.chomp
+    elsif @game_play.to_i == 2
+      print "#{@player_1.name} & #{@player_2.name}, would you like to play again?  Y/N:   ".center(50).colorize(:red)
+      response = gets.chomp
+    end 
     if response.downcase == "y"
       system "clear"
       puts "testing yes" 
