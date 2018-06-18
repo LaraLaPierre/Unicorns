@@ -46,7 +46,7 @@ class Game
       puts
       puts "#{player_1_name} (#{player_1_marker_symbol}), you will go first.  ".colorize(:white)
       puts
-      puts "    ******  Let the game begin!  *****\n\n" .center(50).colorize(:white)
+      puts "    ******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
       # first_player = @current_player
       # second_player = @computer
 
@@ -104,7 +104,7 @@ class Game
       puts 
       @board.add_marker(cell, @current_player.marker)
       puts "=".colorize(:white) * 50 
-      puts "U P D A T E D  B O A R D".center(50).colorize(:white)
+      puts "U P D A T E D  B O A R D".center(50).colorize(:green)
       puts "#{@current_player.name} chose ##{cell}".center(50).colorize(:blue)
       puts "=".colorize(:white) * 50 
       puts
@@ -119,7 +119,7 @@ class Game
       end 
 
       puts
-      puts "Press ENTER to continue".colorize(:white)
+      puts "Press ENTER to continue".center(50).colorize(:green)
       gets
       system "clear"
       switch_players
@@ -159,7 +159,8 @@ class Game
     if @board.full?
       # display draw message
       puts "=".colorize(:white) * 50 
-      puts "Game ends with a tie!".center(50).colorize(:blue).blink
+      puts "Game ends with a tie!".center(50).colorize(:color => :light_blue, :background => :white).blink
+      puts "G A M E  O V E R".center(50).colorize(:color => :light_blue, :background => :white)
       puts "=".colorize(:white) * 50 
       @game_over = true
       true

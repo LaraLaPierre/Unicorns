@@ -9,11 +9,11 @@ class Board
   end 
 
   def render
-    puts "#{@board[0]} | #{@board[1]} | #{@board[2]}".center(50)              
-    puts "===+===+===".center(50)               
-    puts "#{@board[3]} | #{@board[4]} | #{@board[5]}".center(50)             
-    puts "===+===+===".center(50)               
-    puts "#{@board[6]} | #{@board[7]} | #{@board[8]}".center(50)
+    puts "#{@board[0]} | #{@board[1]} | #{@board[2]}".center(50).colorize(:color => :black, :background => :white)              
+    puts "===+===+===".center(50).colorize(:color => :black, :background => :white)                             
+    puts "#{@board[3]} | #{@board[4]} | #{@board[5]}".center(50).colorize(:color => :black, :background => :white)                           
+    puts "===+===+===".center(50).colorize(:color => :black, :background => :white)                             
+    puts "#{@board[6]} | #{@board[7]} | #{@board[8]}".center(50).colorize(:color => :black, :background => :white)              
   end 
 
   def add_marker(cell, marker)
