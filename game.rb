@@ -20,7 +20,7 @@ class Game
   end
 
   def game_setup
-    #decide game_play options, instantiate game, players, board 
+    #decide game_play options, instantiate players
     puts "Please choose the number of players:\n \n (0) Computer vs. Computer\n (1) Human vs. Computer\n (2) Human vs. Human".colorize(:white)
     puts
     @game_play = gets.chomp
@@ -77,16 +77,30 @@ class Game
       puts 
       puts
       puts "#{@player_1.name} and #{@player_2.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@player_2.name}".colorize(:white)
-      
 
       first_player = gets.chomp.to_i
 
-      if first_player == 1
-        @current_player = @player_1
-      elsif 
-        first_player == 2
-        @current_player = @player_2
-      end 
+        if first_player == 1
+          @current_player = @player_1
+        elsif 
+          first_player == 2
+          @current_player = @player_2
+        end 
+
+    elsif @game_play == "0"
+      system "clear"
+      puts
+      puts 
+      puts
+      puts "You've chosen to watch a game between two computers!!\n".colorize(:blue)
+      sleep 2
+      @computer = Computer.new("Jafar", :X)
+      @player_1 = Computer.new("Scar", :O)
+      puts
+      puts "Enjoy watching the game between #{@computer.name}(#{@computer.marker}) and their opponent, #{@player_1.name}(#{@player_1.marker}!".colorize(:white)
+      @current_player = @computer
+      sleep 3
+
 
     end 
     system "clear"
@@ -108,11 +122,14 @@ class Game
 
       until good_cell_choice
       # ask for cell choice from the current player
-        if @current_player != @computer
+        if @game_play.to_i == 0
+          cell = @computer.computer_cell_choice(@board.board, @player_1.marker) 
+        elsif @current_player != @computer
           cell = @current_player.get_cell_choice 
         else
           cell = @computer.computer_cell_choice(@board.board, @player_1.marker) 
         end
+
         #validate cell choice
         if @board.within_valid_cell?(cell) && @board.cell_available?(cell)
            good_cell_choice = true
@@ -190,19 +207,26 @@ class Game
   end
 
   def switch_players
-    if @game_play.to_i == 2
+    if @game_play.to_i == 0
+      if @current_player == @computer
+        @current_player = @player_1
+      else
+        @current_player = @computer
+      end
+
+    elsif @game_play.to_i == 2
       if @current_player == @player_1
         @current_player = @player_2
       else
         @current_player = @player_1
       end
+
     elsif @game_play.to_i == 1
       if @current_player == @player_1
         @current_player = @computer
       else
         @current_player = @player_1
       end
-      
     end 
   end
 
