@@ -9,37 +9,54 @@ attr_accessor :name, :marker
     @marker = marker 
   end
 
+  def computer_war_games_choice(board, opponents_marker)
+    #when two computers play, random cell choices will be made to make each game unique
+    available_spaces = []
+    board.each do |cell|
+      if cell.class == String
+        available_spaces << cell 
+      end 
+    end 
+    @cell = available_spaces.sample.to_i
+  end 
+
   def computer_cell_choice(board, opponents_marker) 
-    # center_space_avail(board) || winning_move(board) || corner_space_avail(board) 
+    # logic for strategy to choose best cell  
     @cell = nil
-    @cell = center_space_avail(board) 
+    @cell = center_space(board) 
     if @cell != nil
-      return @cell
+      return @cell 
     end 
     @cell = winning_move(board)
     if @cell != nil
-      return @cell
+      return @cell 
     end 
     @cell = block_move(board, opponents_marker)
     if @cell != nil
-      return @cell
+      return @cell 
     end
-    @cell = corner_space_avail(board)
+    @cell = corner_space(board)
     if @cell != nil
-      return @cell
-    end  
+      return @cell 
+    end
+    @cell = last_space(board)
+    if @cell != nil
+      return @cell 
+    end    
   end 
 
-  def center_space_avail(board)
+  def center_space(board)
     @cell = nil 
       if board[4] == "4"
-        @cell = 4 
+        cell = 4 
       end
-    return @cell
   end
 
   def block_move(board, opponents_marker)
     @cell = nil
+
+    # top_horizontal = [0, 1, 2]
+    # 3.times do
     if 
       board[0] == opponents_marker && board[1] == opponents_marker && board[2].class != Symbol
       cell = 2
@@ -104,10 +121,10 @@ attr_accessor :name, :marker
       board[8] == opponents_marker && board[4] == opponents_marker && board[0].class != Symbol
       cell = 0
     end 
-    return cell
+    
   end 
 
-  def corner_space_avail(board)
+  def corner_space(board)
     @cell = nil 
       if board[0] == "0"
         cell = 0
@@ -118,7 +135,7 @@ attr_accessor :name, :marker
       elsif board[8] == "8"
         cell = 8
       end
-      return cell 
+       
   end 
 
   def winning_move(board)
@@ -187,45 +204,6 @@ attr_accessor :name, :marker
       board[8] == :X && board[4] == :X && board[0].class != Symbol
       cell = 0
     end
-  end 
-
-  def middle_space_avail(board)
-  end 
-
-  # def get_best_move(board)
-  #   available_spaces = []
-  #   best_move = nil
-  #   board.each do |cell|
-  #     if cell.class != Symbol
-  #       available_spaces << cell
-  #     end
-  #   end
-  #   puts "================="
-  #   p available_spaces
-  #   available_spaces.each do |cells|
-  #     board[cells.to_i] = @computer
-  #     if game_is_over(board)
-  #       best_move = cells.to_i
-  #       board[cells.to_i] = as
-  #       return best_move
-  #     else
-  #       board[as.to_i] = @player
-  #       if game_is_over(board)
-  #         best_move = as.to_i
-  #         board[as.to_i] = as
-  #         return best_move
-  #       else
-  #         board[as.to_i] = as
-  #       end
-  #     end
-  #   end
-  #   if best_move
-  #     return best_move
-  #   else
-  #     n = rand(0..available_spaces.count)
-  #     return available_spaces[n].to_i
-  #   end
-  # end
-
-
+  end  
+ 
 end 

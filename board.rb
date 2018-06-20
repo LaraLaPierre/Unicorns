@@ -13,7 +13,7 @@ class Board
     puts "===+===+===".center(50).colorize(:color => :black, :background => :white)                             
     puts "#{@board[3]} | #{@board[4]} | #{@board[5]}".center(50).colorize(:color => :black, :background => :white)                           
     puts "===+===+===".center(50).colorize(:color => :black, :background => :white)                             
-    puts "#{@board[6]} | #{@board[7]} | #{@board[8]}".center(50).colorize(:color => :black, :background => :white)              
+    puts "#{@board[6]} | #{@board[7]} | #{@board[8]}".center(50).colorize(:color => :black, :background => :white)
   end 
 
   def add_marker(cell, marker)
@@ -31,7 +31,6 @@ class Board
       puts "Oops! That cell number does not exist, try again!".colorize(:red)
       sleep 3
       return false
-      
     end
   end
 
@@ -45,7 +44,6 @@ class Board
       puts "Oops! There is already a marker there, try again!".colorize(:red)
       sleep 3
       return false
-      
     end
   end
 

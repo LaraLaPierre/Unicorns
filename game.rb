@@ -26,7 +26,21 @@ class Game
     @game_play = gets.chomp
     puts
 
-    if @game_play == "1"
+    if @game_play == "0"
+      system "clear"
+      puts
+      puts 
+      puts
+      puts "You've chosen to watch a game between two computers!!\n".colorize(:blue)
+      sleep 2
+      @computer = Computer.new("Jafar", :X)
+      @player_1 = Computer.new("Scar", :O)
+      puts
+      puts "Enjoy watching the game between #{@computer.name}(#{@computer.marker}) and their opponent, #{@player_1.name}(#{@player_1.marker})!".colorize(:white)
+      @current_player = @player_1
+      sleep 3
+
+    elsif @game_play == "1"
       system "clear"
       @computer = Computer.new("Robot", :X)
       puts
@@ -47,19 +61,17 @@ class Game
       @game_over = false
       @current_player = @player_1
       system "clear"
-
+      puts
       puts
       puts "#{player_1_name} (#{player_1_marker_symbol}), you will go first.  ".colorize(:white)
+      sleep 2
       
-      # first_player = @current_player
-      # second_player = @computer
-
     elsif @game_play == "2"
       system "clear"
       puts
       puts 
       puts
-      puts "You've chosen to play a two player game!\n".colorize(:blue)
+      puts "You've chosen a (2) player game!\n".colorize(:blue)
       print "Player 1, please enter your name.  ".colorize(:white)
       player_1_name = gets.chomp
       puts
@@ -87,25 +99,10 @@ class Game
           @current_player = @player_2
         end 
 
-    elsif @game_play == "0"
-      system "clear"
-      puts
-      puts 
-      puts
-      puts "You've chosen to watch a game between two computers!!\n".colorize(:blue)
-      sleep 2
-      @computer = Computer.new("Jafar", :X)
-      @player_1 = Computer.new("Scar", :O)
-      puts
-      puts "Enjoy watching the game between #{@computer.name}(#{@computer.marker}) and their opponent, #{@player_1.name}(#{@player_1.marker}!".colorize(:white)
-      @current_player = @computer
-      sleep 3
-
-
     end 
     system "clear"
     puts
-    puts "    ******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
+    puts "******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
     start_game
   end 
 
@@ -123,7 +120,7 @@ class Game
       until good_cell_choice
       # ask for cell choice from the current player
         if @game_play.to_i == 0
-          cell = @computer.computer_cell_choice(@board.board, @player_1.marker) 
+          cell = @computer.computer_war_games_choice(@board.board, @player_1.marker) 
         elsif @current_player != @computer
           cell = @current_player.get_cell_choice 
         else
@@ -143,7 +140,7 @@ class Game
         puts "U P D A T E D  B O A R D".center(50).colorize(:green)
         puts "#{@current_player.name} chose ##{cell}".center(50).colorize(:blue)
         puts "=".colorize(:white) * 50 
-        puts
+        puts  
         puts
         #display updated board with latest marker added
         @board.render
@@ -159,7 +156,7 @@ class Game
         gets
         system "clear"
         #switch players
-        switch_players
+        switch_players(@game_play) 
         puts 
         puts "=".colorize(:white) * 50
         puts "#{@current_player.name}, your turn!".center(50).colorize(:blue)
@@ -173,7 +170,7 @@ class Game
    # check if the game is over, and if so, want to play again
     if check_victory(@board) || check_draw(@board)
       puts
-      play_again
+      play_again(@game_play)
     end 
   end
 
@@ -206,22 +203,14 @@ class Game
     end
   end
 
-  def switch_players
-    if @game_play.to_i == 0
-      if @current_player == @computer
-        @current_player = @player_1
-      else
-        @current_player = @computer
-      end
-
-    elsif @game_play.to_i == 2
+  def switch_players(game_play)
+    if game_play.to_i == 2
       if @current_player == @player_1
         @current_player = @player_2
       else
         @current_player = @player_1
       end
-
-    elsif @game_play.to_i == 1
+    else game_play.to_i == 1 || 0
       if @current_player == @player_1
         @current_player = @computer
       else
@@ -230,11 +219,14 @@ class Game
     end 
   end
 
-  def play_again
-    if @game_play.to_i == 1
+  def play_again(game_play)
+    if game_play.to_i == 0
+      print "Would you like to watch another game?  Y/N:   ".center(50).colorize(:red)
+      response = gets.chomp
+    elsif game_play.to_i == 1
       print "Would you like to play Robot again?  Y/N:   ".center(50).colorize(:red)
       response = gets.chomp
-    elsif @game_play.to_i == 2
+    else game_play.to_i == 2
       print "#{@player_1.name} & #{@player_2.name}, would you like to play again?  Y/N:   ".center(50).colorize(:red)
       response = gets.chomp
     end 
