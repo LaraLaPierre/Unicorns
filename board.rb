@@ -2,13 +2,15 @@ require_relative "./player"
 require_relative "./computer"
 
  
-class Board 
+class Board
+#Board class is responsible for aspects of the Board only 
   attr_accessor :board
   def initialize
     @board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
   end 
 
   def render
+    #renders the board
     puts "#{@board[0]} | #{@board[1]} | #{@board[2]}".center(50).colorize(:color => :black, :background => :white)              
     puts "===+===+===".center(50).colorize(:color => :black, :background => :white)                             
     puts "#{@board[3]} | #{@board[4]} | #{@board[5]}".center(50).colorize(:color => :black, :background => :white)                           
@@ -47,8 +49,8 @@ class Board
     end
   end
 
-  def winning_combination?()
-    # is there a winning diagonal, vertical or horizontal?
+  def winning_combination?
+    # is there a winning combo horizontal, vertical or diagonal?
     [board[0], board[1], board[2]].uniq.length == 1 ||
     [board[3], board[4], board[5]].uniq.length == 1 ||
     [board[6], board[7], board[8]].uniq.length == 1 ||
@@ -60,7 +62,7 @@ class Board
   end
 
   def full?
-    # does every cell contain a marker?
+    # does every cell contain a marker, but no winner?
     @board.select{|cell| cell.class == Symbol }.length == 9
   end
 

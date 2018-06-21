@@ -1,9 +1,8 @@
 class Computer 
 attr_accessor :name, :marker
  
-  # initialize
   def initialize(name = "Computer", marker)
-    # Set marker type (e.g. X or O)
+    # initialize Computer instance with name and marker 
     raise "Marker must be a Symbol!" unless marker.is_a?(Symbol)
     @name = name
     @marker = marker 
@@ -46,6 +45,7 @@ attr_accessor :name, :marker
   end 
 
   def center_space(board)
+    #choose center cell
     @cell = nil 
       if board[4] == "4"
         cell = 4 
@@ -53,9 +53,15 @@ attr_accessor :name, :marker
   end
 
   def block_move(board, opponents_marker)
+    #block opponents potential win
     @cell = nil
+    # top_row = [0, 1, 2]
+    # top_row.each do |cell|
+    #   if 
+    #   board[top_horizontal[top_row[0]] == opponents_marker && board[[top_row[1]] == opponents_marker && board[[top_row[2]].class != Symbol
+    #   cell = [top_row[2]
+    
 
-    # top_horizontal = [0, 1, 2]
     # 3.times do
     if 
       board[0] == opponents_marker && board[1] == opponents_marker && board[2].class != Symbol
@@ -125,6 +131,7 @@ attr_accessor :name, :marker
   end 
 
   def corner_space(board)
+    #choose corner cell
     @cell = nil 
       if board[0] == "0"
         cell = 0
@@ -139,6 +146,7 @@ attr_accessor :name, :marker
   end 
 
   def winning_move(board)
+    #choose the cell to complete a winning combo
     @cell = nil 
     if 
       board[0] == :X && board[1] == :X && board[2].class != Symbol

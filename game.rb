@@ -16,11 +16,10 @@ class Game
     puts
 
     game_setup
-     
   end
 
   def game_setup
-    #decide game_play options, instantiate players
+    #decide game_play options, create player instances
     puts "Please choose the number of players:\n \n (0) Computer vs. Computer\n (1) Human vs. Computer\n (2) Human vs. Human".colorize(:white)
     puts
     @game_play = gets.chomp
@@ -33,12 +32,12 @@ class Game
       puts
       puts "You've chosen to watch a game between two computers!!\n".colorize(:blue)
       sleep 2
-      @computer = Computer.new("Jafar", :X)
-      @player_1 = Computer.new("Scar", :O)
+      @computer = Computer.new("Optimus Prime", :X)
+      @player_1 = Computer.new("DJ Roomba", :O)
       puts
       puts "Enjoy watching the game between #{@computer.name}(#{@computer.marker}) and their opponent, #{@player_1.name}(#{@player_1.marker})!".colorize(:white)
       @current_player = @player_1
-      sleep 3
+      sleep 4
 
     elsif @game_play == "1"
       system "clear"
