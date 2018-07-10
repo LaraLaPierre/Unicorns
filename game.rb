@@ -79,8 +79,8 @@ class Game
 
       @computer = Computer.new("Optimus Prime", optimus_marker_symbol.to_sym)
       @player_1 = Computer.new("DJ Roomba", dj_marker_symbol.to_sym)
-      puts
-      puts "Enjoy watching the game between #{@computer.name}(#{@computer.marker}) and their opponent, #{@player_1.name}(#{@player_1.marker})!".colorize(:white)
+      
+      puts "\nEnjoy watching the game between #{@computer.name}(#{@computer.marker}) and their opponent, #{@player_1.name}(#{@player_1.marker})!".colorize(:white)
       @current_player = @player_1
       sleep 4
 
@@ -130,9 +130,9 @@ class Game
 
       valid_input = false
       until valid_input == true 
-      print "\n#{player_1_name}, please choose the marker symbol for Erwin .  ".colorize(:white)
-      computer_marker_symbol = gets.chomp
-        if computer_marker_symbol.length == 1
+        print "\n#{player_1_name}, please choose the marker symbol for Erwin .  ".colorize(:white)
+        computer_marker_symbol = gets.chomp
+          if computer_marker_symbol.length == 1
             if !computer_marker_symbol.include? " "
               if computer_marker_symbol != player_1_marker_symbol
                 puts "\nExcellent Choice!".colorize(:white)
@@ -163,9 +163,8 @@ class Game
       @game_over = false
       @current_player = @player_1
       system "clear"
-      puts
-      puts
-      puts "#{@player_1.name} and #{@computer.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@computer.name}".colorize(:white)
+      
+      puts "\n\n#{@player_1.name} and #{@computer.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@computer.name}".colorize(:white)
 
       first_player = gets.chomp.to_i
 
@@ -176,46 +175,162 @@ class Game
           @current_player = @computer
         end 
 
-      # puts "#{player_1_name} (#{player_1_marker_symbol}), you will go first.  ".colorize(:white)
       sleep 2
       
     elsif @game_play == "2"
       system "clear"
-      puts
-      puts 
-      puts
-      puts "You've chosen a (2) player game!\n".colorize(:blue)
-      print "Player 1, please enter your name.  ".colorize(:white)
-      player_1_name = gets.chomp
-      puts
-      print "#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
-      player_1_marker_symbol = gets.chomp
-      system "clear"
-      print "Player 2, please enter your name.  ".colorize(:white)
-      player_2_name = gets.chomp
-      puts
-      print "#{player_2_name}, enter your desired marker symbol.  ".colorize(:white)
-      player_2_marker_symbol = gets.chomp
-      system "clear"
+      
+      puts "\n\n\nYou've chosen a (2) player game!\n".colorize(:blue)
+
+      valid_input = false
+      until valid_input == true 
+        print "Player 1, please enter your name.  ".colorize(:white)
+        player_1_name = gets.chomp
+          if player_1_name.length > 1
+            if player_1_name.include? " " 
+              puts "\nOops! Your name cannot contain any spaces. Try again! \n".colorize(:red)
+            else 
+              valid_input = true
+              sleep 1
+              system "clear"
+            end
+          else
+            puts "\nOops! Your name must be more than one character. Try again! \n".colorize(:red)
+          end
+      end
+
+      valid_input = false
+      until valid_input == true 
+       print "#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
+        player_1_marker_symbol = gets.chomp
+          if player_1_marker_symbol.length == 1
+            if player_1_marker_symbol.include? " " 
+              puts "\nOops! A marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
+              sleep 3 
+              system "clear"
+            else 
+              valid_input = true
+              puts "\nGreat Choice!".colorize(:white)
+              sleep 3
+              system "clear"
+            end
+          else
+            puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
+            sleep 3 
+            system "clear"
+          end
+      end
+
+      valid_input = false
+      until valid_input == true 
+        print "\nPlayer 2, please enter your name.  ".colorize(:white)
+        player_2_name = gets.chomp
+          if player_2_name.length > 1
+            if player_2_name.include? " " 
+              puts "\nOops! Your name cannot contain any spaces. Try again! \n".colorize(:red)
+            else 
+              valid_input = true
+              sleep 1
+              system "clear"
+            end
+          else
+            puts "\nOops! Your name must be more than one character. Try again! \n".colorize(:red)
+          end
+      end
+
+      valid_input = false
+      until valid_input == true 
+        print "\n#{player_2_name}, please choose your desired marker symbol .  ".colorize(:white)
+        player_2_marker_symbol = gets.chomp
+          if player_2_marker_symbol.length == 1
+            if !player_2_marker_symbol.include? " "
+              if player_2_marker_symbol != player_1_marker_symbol
+                puts "\nExcellent Choice!".colorize(:white)
+                valid_input = true
+                sleep 1
+              else
+                puts "\nOops! That marker has already been chosen for #{player_1_name}! Please choose again.\n".colorize(:red)
+                sleep 3
+                system "clear"
+              end
+            else
+              puts "\nOops! A marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
+              sleep 3
+              system "clear"
+            end
+          else
+            puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
+            sleep 3
+            system "clear"
+          end
+      end
+
       @player_1 = Player.new(player_1_name, player_1_marker_symbol.to_sym)
       @player_2 = Player.new(player_2_name, player_2_marker_symbol.to_sym)
-      puts 
+      
+      
+
+
+
+      valid_input = false
+      until valid_input == true 
+        puts "\n\n#{@player_1.name} and #{@player_2.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@player_2.name}".colorize(:white)
+        first_player = gets.chomp
+          if first_player.length == 1
+            if first_player.include? "1" || "2"
+              if !first_player.include? " "
+                if first_player == "1"
+                    @current_player = @player_1
+                    valid_input = true
+                    puts "#{player_1_name}, You will go first! ".colorize(:white)
+                    sleep 2 
+                else 
+                   first_player == "2"
+                   @current_player = @player_2
+                   valid_input = true
+                   puts "#{player_2_name}, You will go first! ".colorize(:white)
+                   sleep 2
+                end
+              else
+                puts "\nOops! No spaces allowed. Please choose again.\n".colorize(:red)
+                sleep 3
+                system "clear"
+              end
+            else
+              puts "Oops! Only numbers 1 or 2 allowed. Try again.".colorize(:red) 
+              sleep 3
+              system "clear"
+            end
+          else
+            puts "\nOops! Choose one number only. Please choose again. \n".colorize(:red)
+            sleep 3
+            system "clear"
+          end
+        end
+      end
+
+      # first_player = gets.chomp.to_i
+      # if first_player.length == 1
+      # else 
+      #   puts "Oops! Please choose only one number. Try again." .colorize(:red)
+      #   if first_player.class == Integer 
+      #   else 
+      #     puts "Oops! Only numbers allowed. Please choose either 1 or 2. Try again.".colorize(:red)
+      #     if !first_player.include? " "
+      #     else 
+      #       puts "Oops! No spaces allowed. Please choose either 1 or 2. Try again.".colorize(:red)
+      #       if first_player == 1
+      #         @current_player = @player_1
+      #       else 
+      #        first_player == 2
+      #        @current_player = @player_2
+      #       end
+      #     end 
+      #   end
+      # end
+      system "clear"
       puts
-      puts "#{@player_1.name} and #{@player_2.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@player_2.name}".colorize(:white)
-
-      first_player = gets.chomp.to_i
-
-        if first_player == 1
-          @current_player = @player_1
-        elsif 
-          first_player == 2
-          @current_player = @player_2
-        end 
-
-    end 
-    system "clear"
-    puts
-    puts "******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
+      puts "******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
   end 
 
 
