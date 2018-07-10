@@ -30,11 +30,38 @@ class Game
       puts
       puts "You've chosen to watch a game between two computers!!\n".colorize(:blue)
       sleep 1
+      
+      valid_input = false
+      until valid_input == true 
       print "Please choose a marker symbol for Optimus Prime. ".colorize(:white)
       optimus_marker_symbol = gets.chomp
-      puts
-      print "Now choose a different marker symbol for DJ Roomba. ".colorize(:white)
+        if optimus_marker_symbol.length == 1
+          puts "\nGreat Choice!\n".colorize(:white)
+          valid_input = true
+          sleep 1
+          system "clear"
+        else
+          puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
+        end
+      end
+      
+      valid_input = false
+      until valid_input == true 
+      print "\n\nNow please choose a marker symbol for DJ Roomba. ".colorize(:white)
       dj_marker_symbol = gets.chomp
+        if dj_marker_symbol.length == 1
+          if dj_marker_symbol != optimus_marker_symbol
+            puts "\nExcellent Choice!".colorize(:white)
+            valid_input = true
+            sleep 1
+          else
+            puts "\nOops! That marker has already been chosen for Optimus Prime! Please choose again.\n".colorize(:red)
+          end
+        else
+          puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
+        end
+      end
+
       @computer = Computer.new("Optimus Prime", optimus_marker_symbol.to_sym)
       @player_1 = Computer.new("DJ Roomba", dj_marker_symbol.to_sym)
       puts
