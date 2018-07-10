@@ -25,42 +25,57 @@ class Game
 
     if @game_play == "0"
       system "clear"
-      puts
-      puts 
-      puts
-      puts "You've chosen to watch a game between two computers!!\n".colorize(:blue)
+      
+      puts "\n\n\nYou've chosen to watch a game between two computers!!\n".colorize(:blue)
       sleep 1
       
       valid_input = false
       until valid_input == true 
-      print "Please choose a marker symbol for Optimus Prime. ".colorize(:white)
-      optimus_marker_symbol = gets.chomp
-        if optimus_marker_symbol.length == 1
-          puts "\nGreat Choice!\n".colorize(:white)
-          valid_input = true
-          sleep 1
-          system "clear"
-        else
-          puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
-        end
+        print "Please choose a marker symbol for Optimus Prime. ".colorize(:white)
+        optimus_marker_symbol = gets.chomp
+          if optimus_marker_symbol.length == 1
+            if optimus_marker_symbol.include? " " 
+              puts "\nOops! Your marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
+              sleep 3 
+              system "clear"
+            else 
+              valid_input = true
+              puts "\nGreat Choice!".colorize(:white)
+              sleep 3
+            end
+          else
+            puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
+            sleep 3 
+            system "clear"
+          end
       end
       
       valid_input = false
-      until valid_input == true 
-      print "\n\nNow please choose a marker symbol for DJ Roomba. ".colorize(:white)
-      dj_marker_symbol = gets.chomp
-        if dj_marker_symbol.length == 1
-          if dj_marker_symbol != optimus_marker_symbol
-            puts "\nExcellent Choice!".colorize(:white)
-            valid_input = true
-            sleep 1
+        until valid_input == true 
+        print "\n\nNow please choose a marker symbol for DJ Roomba. ".colorize(:white)
+        dj_marker_symbol = gets.chomp
+          if dj_marker_symbol.length == 1
+            if !dj_marker_symbol.include? " "
+              if dj_marker_symbol != optimus_marker_symbol
+                puts "\nExcellent Choice!".colorize(:white)
+                valid_input = true
+                sleep 1
+              else
+                puts "\nOops! That marker has already been chosen for Optimus Prime! Please choose again.\n".colorize(:red)
+                sleep 3
+                system "clear"
+              end
+            else
+              puts "\nOops! A marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
+              sleep 3
+              system "clear"
+            end
           else
-            puts "\nOops! That marker has already been chosen for Optimus Prime! Please choose again.\n".colorize(:red)
+            puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
+            sleep 3
+            system "clear"
           end
-        else
-          puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
         end
-      end
 
       @computer = Computer.new("Optimus Prime", optimus_marker_symbol.to_sym)
       @player_1 = Computer.new("DJ Roomba", dj_marker_symbol.to_sym)
@@ -76,27 +91,72 @@ class Game
 
       valid_input = false
       until valid_input == true 
-      print "Player 1, please enter your name.  ".colorize(:white)
-      player_1_name = gets.chomp
-        if player_1_name.length > 1
-          if player_1_name.include? " " 
-            puts "\nOops! Your name cannot contain any spaces. Try again! \n".colorize(:red)
-          else 
-            valid_input = true
-            sleep 1
+        print "Player 1, please enter your name.  ".colorize(:white)
+        player_1_name = gets.chomp
+          if player_1_name.length > 1
+            if player_1_name.include? " " 
+              puts "\nOops! Your name cannot contain any spaces. Try again! \n".colorize(:red)
+            else 
+              valid_input = true
+              sleep 1
+            end
+          else
+            puts "\nOops! Your name must be more than one character. Try again! \n".colorize(:red)
           end
-        else
-          puts "\nOops! Your name must be more than one character. Try again! \n".colorize(:red)
-        end
       end
       
       system "clear"
-      print "\n\n\n#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
-      player_1_marker_symbol = gets.chomp
+
+      valid_input = false
+      until valid_input == true 
+        print "\n\n\n#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
+        player_1_marker_symbol = gets.chomp
+          if player_1_marker_symbol.length == 1
+            if player_1_marker_symbol.include? " " 
+              puts "\nOops! A marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
+              sleep 3 
+              system "clear"
+            else 
+              valid_input = true
+              puts "\nGreat Choice!".colorize(:white)
+              sleep 3
+            end
+          else
+            puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
+            sleep 3 
+            system "clear"
+          end
+      end
+
+      valid_input = false
+      until valid_input == true 
       print "\n#{player_1_name}, please choose the marker symbol for Erwin .  ".colorize(:white)
       computer_marker_symbol = gets.chomp
+        if computer_marker_symbol.length == 1
+            if !computer_marker_symbol.include? " "
+              if computer_marker_symbol != player_1_marker_symbol
+                puts "\nExcellent Choice!".colorize(:white)
+                valid_input = true
+                sleep 1
+              else
+                puts "\nOops! That marker has already been chosen for #{player_1_name}! Please choose again.\n".colorize(:red)
+                sleep 3
+                system "clear"
+              end
+            else
+              puts "\nOops! A marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
+              sleep 3
+              system "clear"
+            end
+          else
+            puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
+            sleep 3
+            system "clear"
+          end
+      end
+
       sleep 1
-      puts
+
       @computer = Computer.new("Erwin", computer_marker_symbol.to_sym)
       @player_1 = Player.new(player_1_name, player_1_marker_symbol.to_sym)
       @board = Board.new
