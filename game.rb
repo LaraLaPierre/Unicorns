@@ -44,20 +44,21 @@ class Game
 
     elsif @game_play == "1"
       system "clear"
-      @computer = Computer.new("Robot", :X)
       puts
       puts
       puts
-      puts "You've chosen to play against #{@computer.name}, the Computer!\n".colorize(:blue)
+      puts "You've chosen to play against the Erwin Computer!\n".colorize(:blue)
       print "Player 1, please enter your name.  ".colorize(:white)
       player_1_name = gets.chomp
       puts
-      puts "#{@computer.name}'s marker symbol is #{@computer.marker}.".colorize(:white)
-      sleep 1
-      puts
       print "#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
       player_1_marker_symbol = gets.chomp
-    
+      puts
+      print "#{player_1_name}, please choose the marker symbol for Erwin .  ".colorize(:white)
+      computer_marker_symbol = gets.chomp
+      sleep 1
+      puts
+      @computer = Computer.new("Erwin", computer_marker_symbol.to_sym)
       @player_1 = Player.new(player_1_name, player_1_marker_symbol.to_sym)
       @board = Board.new
       @game_over = false
