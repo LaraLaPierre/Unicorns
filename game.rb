@@ -29,9 +29,14 @@ class Game
       puts 
       puts
       puts "You've chosen to watch a game between two computers!!\n".colorize(:blue)
-      sleep 2
-      @computer = Computer.new("Optimus Prime", :X)
-      @player_1 = Computer.new("DJ Roomba", :O)
+      sleep 1
+      print "Please choose a marker symbol for Optimus Prime. ".colorize(:white)
+      optimus_marker_symbol = gets.chomp
+      puts
+      print "Now choose a different marker symbol for DJ Roomba. ".colorize(:white)
+      dj_marker_symbol = gets.chomp
+      @computer = Computer.new("Optimus Prime", optimus_marker_symbol.to_sym)
+      @player_1 = Computer.new("DJ Roomba", dj_marker_symbol.to_sym)
       puts
       puts "Enjoy watching the game between #{@computer.name}(#{@computer.marker}) and their opponent, #{@player_1.name}(#{@player_1.marker})!".colorize(:white)
       @current_player = @player_1
