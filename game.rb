@@ -66,7 +66,18 @@ class Game
       system "clear"
       puts
       puts
-      puts "#{player_1_name} (#{player_1_marker_symbol}), you will go first.  ".colorize(:white)
+      puts "#{@player_1.name} and #{@computer.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@computer.name}".colorize(:white)
+
+      first_player = gets.chomp.to_i
+
+        if first_player == 1
+          @current_player = @player_1
+        elsif 
+          first_player == 2
+          @current_player = @computer
+        end 
+
+      # puts "#{player_1_name} (#{player_1_marker_symbol}), you will go first.  ".colorize(:white)
       sleep 2
       
     elsif @game_play == "2"
@@ -127,7 +138,7 @@ class Game
           cell = @current_player.get_cell_choice
           system "clear" 
         else
-          cell = @computer.computer_cell_choice(@board.board, @player_1.marker)
+          cell = @computer.computer_cell_choice(@board.board, @player_1.marker, @computer.marker)
           sleep 2
           system "clear" 
         end

@@ -19,14 +19,14 @@ attr_accessor :name, :marker
     cell = available_spaces.sample.to_i
   end 
 
-  def computer_cell_choice(board, opponents_marker) 
+  def computer_cell_choice(board, opponents_marker, computers_marker) 
     # logic for strategy to choose best cell  
     cell = nil
     cell = center_space(board) 
     if cell != nil
       return cell 
     end 
-    cell = winning_move(board)
+    cell = winning_move(board, computers_marker)
     if cell != nil
       return cell 
     end 
@@ -114,50 +114,50 @@ attr_accessor :name, :marker
       end  
   end 
 
-  def winning_move(board)
+  def winning_move(board, computers_marker)
     #choose the cell to complete a winning combo
     cell = nil 
-    if board[0] == :X && board[1] == :X && board[2].class != Symbol
+    if board[0] == computers_marker && board[1] == computers_marker && board[2].class != Symbol
       cell = 2
-    elsif board[0] == :X && board[2] == :X && board[1].class != Symbol
+    elsif board[0] == computers_marker && board[2] == computers_marker && board[1].class != Symbol
       cell = 1
-    elsif board[1] == :X && board[2] == :X && board[0].class != Symbol
+    elsif board[1] == computers_marker && board[2] == computers_marker && board[0].class != Symbol
       cell = 0
-    elsif board[3] == :X && board[4] == :X && board[5].class != Symbol
+    elsif board[3] == computers_marker && board[4] == computers_marker && board[5].class != Symbol
       cell = 5
-    elsif board[4] == :X && board[5] == :X && board[3].class != Symbol
+    elsif board[4] == computers_marker && board[5] == computers_marker && board[3].class != Symbol
       cell = 3
-    elsif board[5] == :X && board[3] == :X && board[4].class != Symbol
+    elsif board[5] == computers_marker && board[3] == computers_marker && board[4].class != Symbol
       cell = 4
-    elsif board[6] == :X && board[7] == :X && board[8].class != Symbol
+    elsif board[6] == computers_marker && board[7] == computers_marker && board[8].class != Symbol
       cell = 8
-    elsif board[6] == :X && board[8] == :X && board[7].class != Symbol
+    elsif board[6] == computers_marker && board[8] == computers_marker && board[7].class != Symbol
       cell = 7
-    elsif board[7] == :X && board[8] == :X && board[6].class != Symbol
+    elsif board[7] == computers_marker && board[8] == computers_marker && board[6].class != Symbol
       cell = 6
-    elsif board[0] == :X && board[6] == :X && board[3].class != Symbol
+    elsif board[0] == computers_marker && board[6] == computers_marker && board[3].class != Symbol
       cell = 3
-    elsif board[0] == :X && board[3] == :X && board[6].class != Symbol
+    elsif board[0] == computers_marker && board[3] == computers_marker && board[6].class != Symbol
       cell = 6
-    elsif board[3] == :X && board[6] == :X && board[0].class != Symbol
+    elsif board[3] == computers_marker && board[6] == computers_marker && board[0].class != Symbol
       cell = 0
-    elsif board[1] == :X && board[4] == :X && board[7].class != Symbol
+    elsif board[1] == computers_marker && board[4] == computers_marker && board[7].class != Symbol
       cell =7
-    elsif board[4] == :X && board[7] == :X && board[1].class != Symbol
+    elsif board[4] == computers_marker && board[7] == computers_marker && board[1].class != Symbol
       cell = 1
-    elsif board[1] == :X && board[7] == :X && board[4].class != Symbol
+    elsif board[1] == computers_marker && board[7] == computers_marker && board[4].class != Symbol
       cell = 4
-    elsif board[2] == :X && board[5] == :X && board[8].class != Symbol
+    elsif board[2] == computers_marker && board[5] == computers_marker && board[8].class != Symbol
       cell = 8
-    elsif board[2] == :X && board[8] == :X && board[5].class != Symbol
+    elsif board[2] == computers_marker && board[8] == computers_marker && board[5].class != Symbol
       cell = 5
-    elsif board[5] == :X && board[8] == :X && board[2].class != Symbol
+    elsif board[5] == computers_marker && board[8] == computers_marker && board[2].class != Symbol
       cell = 2
-    elsif board[0] == :X && board[4] == :X && board[8].class != Symbol
+    elsif board[0] == computers_marker && board[4] == computers_marker && board[8].class != Symbol
       cell = 8
-    elsif board[0] == :X && board[8] == :X && board[4].class != Symbol
+    elsif board[0] == computers_marker && board[8] == computers_marker && board[4].class != Symbol
       cell = 4
-    elsif board[8] == :X && board[4] == :X && board[0].class != Symbol
+    elsif board[8] == computers_marker && board[4] == computers_marker && board[0].class != Symbol
       cell = 0
     end
   end  
