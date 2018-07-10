@@ -50,7 +50,7 @@ class Board
   end
 
   def winning_combination?
-    # is there a winning combo horizontal, vertical or diagonal?
+    # is there a winning combo horizontal, vertical or diagona?
     [board[0], board[1], board[2]].uniq.length == 1 ||
     [board[3], board[4], board[5]].uniq.length == 1 ||
     [board[6], board[7], board[8]].uniq.length == 1 ||
@@ -65,5 +65,4 @@ class Board
     # does every cell contain a marker, but no winner?
     @board.select{|cell| cell.class == Symbol }.length == 9
   end
-
 end 

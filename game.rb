@@ -14,8 +14,6 @@ class Game
     puts "=".colorize(:white) * 60
     puts 
     puts
-
-    game_setup
   end
 
   def game_setup
@@ -102,7 +100,6 @@ class Game
     system "clear"
     puts
     puts "******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
-    start_game
   end 
 
 
@@ -121,9 +118,12 @@ class Game
         if @game_play.to_i == 0
           cell = @computer.computer_war_games_choice(@board.board, @player_1.marker) 
         elsif @current_player != @computer
-          cell = @current_player.get_cell_choice 
+          cell = @current_player.get_cell_choice
+          system "clear" 
         else
-          cell = @computer.computer_cell_choice(@board.board, @player_1.marker) 
+          cell = @computer.computer_cell_choice(@board.board, @player_1.marker)
+          sleep 2
+          system "clear" 
         end
 
         #validate cell choice
@@ -173,9 +173,9 @@ class Game
     end 
   end
 
-  def check_victory(board)
+  def check_victory(current_board)
     # IF Board says current player's marker has a winning combination
-    if @board.winning_combination? == true
+    if current_board.winning_combination? == true
       # then output a victory message
       puts "=".colorize(:white) * 50 
       puts "Congratulations #{@current_player.name}, you win!".center(50).colorize(:color => :light_blue, :background => :white).blink
@@ -187,9 +187,9 @@ class Game
     end
   end
 
-  def check_draw(board)
+  def check_draw(current_board)
     # If board is full of markers
-    if @board.full?
+    if current_board.full?
       # display draw message
       puts "=".colorize(:white) * 50 
       puts "Game ends with a tie!".center(50).colorize(:color => :light_blue, :background => :white).blink
@@ -259,3 +259,4 @@ end
 
 game = Game.new
 game.game_setup
+game.start_game
