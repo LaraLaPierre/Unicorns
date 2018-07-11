@@ -110,7 +110,7 @@ class Game
           if player_1_marker_symbol.length == 1
             if player_1_marker_symbol.include? " " 
               puts "\nOops! A marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
-              sleep 3 
+              sleep 2 
               system "clear"
             else 
               valid_input = true
@@ -118,7 +118,7 @@ class Game
             end
           else
             puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
-            sleep 3 
+            sleep 2
             system "clear"
           end
       end
@@ -132,7 +132,6 @@ class Game
               if computer_marker_symbol != player_1_marker_symbol
                 puts "\nExcellent Choice!".colorize(:white)
                 valid_input = true
-                sleep 1
               else
                 puts "\nOops! That marker has already been chosen for #{player_1_name}! Please choose again.\n".colorize(:red)
                 sleep 3
@@ -170,7 +169,7 @@ class Game
           @current_player = @computer
         end 
 
-      sleep 2
+      sleep 1
       
     elsif @game_play == "2"
       system "clear"
