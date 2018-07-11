@@ -317,10 +317,10 @@ class Game
           cell = @computer.computer_war_games_choice(@board.board, @player_1.marker) 
         elsif @current_player != @computer
           cell = @current_player.get_cell_choice
-          system "clear" 
+          # system "clear" 
         else
           cell = @computer.computer_cell_choice(@board.board, @player_1.marker, @computer.marker)
-          system "clear" 
+          # system "clear" 
         end
 
         if @board.within_valid_cell?(cell) && @board.cell_available?(cell)
@@ -421,6 +421,7 @@ class Game
       if response.downcase == "y"
         system "clear" 
         @game_over = false
+        switch_players(@game_play)
         puts "=".colorize(:white) * 50 
         puts "N E W  G A M E".center(50).colorize(:blue)
         puts "=".colorize(:white) * 50 
