@@ -53,7 +53,6 @@ attr_accessor :name, :marker
   end
 
   def block_move(board, opponents_marker)
-    #block opponents potential win
     cell = nil
     if board[0] == opponents_marker && board[1] == opponents_marker && board[2].class != Symbol
       cell = 2

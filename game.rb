@@ -12,16 +12,12 @@ class Game
     puts "=".colorize(:white) * 60
     puts "WELCOME TO LARA'S TIC TAC TOE GAME!".center(60).colorize(:color => :light_blue, :background => :white)
     puts "=".colorize(:white) * 60
-    puts 
-    puts
   end
 
   def game_setup
-    #decide game_play options, create player instances
-    puts "Please choose the number of players:\n \n (0) Computer vs. Computer\n (1) Human vs. Computer\n (2) Human vs. Human".colorize(:white)
-    puts
+    puts "\n\nPlease choose the number of players:\n \n (0) Computer vs. Computer\n (1) Human vs. Computer\n (2) Human vs. Human\n".colorize(:white)
+    
     @game_play = gets.chomp
-    puts
 
     if @game_play == "0"
       system "clear"
@@ -119,7 +115,6 @@ class Game
             else 
               valid_input = true
               puts "\nGreat Choice!".colorize(:white)
-              sleep 3
             end
           else
             puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
@@ -130,7 +125,7 @@ class Game
 
       valid_input = false
       until valid_input == true 
-        print "\n#{player_1_name}, please choose the marker symbol for Erwin .  ".colorize(:white)
+        print "\n#{player_1_name}, please choose the marker symbol for Erwin the Computer.  ".colorize(:white)
         computer_marker_symbol = gets.chomp
           if computer_marker_symbol.length == 1
             if !computer_marker_symbol.include? " "
@@ -268,9 +263,6 @@ class Game
       @player_1 = Player.new(player_1_name, player_1_marker_symbol.to_sym)
       @player_2 = Player.new(player_2_name, player_2_marker_symbol.to_sym)
       
-      
-
-
 
       valid_input = false
       until valid_input == true 
@@ -309,43 +301,19 @@ class Game
         end
       end
 
-      # first_player = gets.chomp.to_i
-      # if first_player.length == 1
-      # else 
-      #   puts "Oops! Please choose only one number. Try again." .colorize(:red)
-      #   if first_player.class == Integer 
-      #   else 
-      #     puts "Oops! Only numbers allowed. Please choose either 1 or 2. Try again.".colorize(:red)
-      #     if !first_player.include? " "
-      #     else 
-      #       puts "Oops! No spaces allowed. Please choose either 1 or 2. Try again.".colorize(:red)
-      #       if first_player == 1
-      #         @current_player = @player_1
-      #       else 
-      #        first_player == 2
-      #        @current_player = @player_2
-      #       end
-      #     end 
-      #   end
-      # end
       system "clear"
-      puts
+      
       puts "******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
   end 
 
 
   def start_game 
-    #loop until there is a winner, or a tie
     @board = Board.new
     until @game_over
-
-      #display the game board 
-      @board.render
-      sleep 1
       good_cell_choice = false
 
       until good_cell_choice
-      # ask for cell choice from the current player
+        @board.render
         if @game_play.to_i == 0
           cell = @computer.computer_war_games_choice(@board.board, @player_1.marker) 
         elsif @current_player != @computer
@@ -353,18 +321,15 @@ class Game
           system "clear" 
         else
           cell = @computer.computer_cell_choice(@board.board, @player_1.marker, @computer.marker)
-          sleep 2
           system "clear" 
         end
 
-        #validate cell choice
         if @board.within_valid_cell?(cell) && @board.cell_available?(cell)
            good_cell_choice = true
         end 
       end
         puts 
         puts 
-        #add current_player marker to board
         @board.add_marker(cell, @current_player.marker)
         puts "=".colorize(:white) * 50 
         puts "U P D A T E D  B O A R D".center(50).colorize(:green)
@@ -372,20 +337,16 @@ class Game
         puts "=".colorize(:white) * 50 
         puts  
         puts
-        #display updated board with latest marker added
         @board.render
         puts 
         puts 
-        #check if there is a win or a tie
         if check_game_over
           break
         end 
-
         puts
         puts "Press ENTER to continue".center(50).colorize(:green)
         gets
         system "clear"
-        #switch players
         switch_players(@game_play) 
         puts 
         puts "=".colorize(:white) * 50
@@ -397,7 +358,6 @@ class Game
 
 
   def check_game_over
-   # check if the game is over, and if so, want to play again
     if check_victory(@board) || check_draw(@board)
       puts
       play_again(@game_play)
@@ -405,9 +365,7 @@ class Game
   end
 
   def check_victory(current_board)
-    # IF Board says current player's marker has a winning combination
     if current_board.winning_combination? == true
-      # then output a victory message
       puts "=".colorize(:white) * 50 
       puts "Congratulations #{@current_player.name}, you win!".center(50).colorize(:color => :light_blue, :background => :white).blink
       puts "G A M E  O V E R".center(50).colorize(:color => :light_blue, :background => :white)
@@ -419,9 +377,7 @@ class Game
   end
 
   def check_draw(current_board)
-    # If board is full of markers
     if current_board.full?
-      # display draw message
       puts "=".colorize(:white) * 50 
       puts "Game ends with a tie!".center(50).colorize(:color => :light_blue, :background => :white).blink
       puts "G A M E  O V E R".center(50).colorize(:color => :light_blue, :background => :white)
@@ -454,7 +410,7 @@ class Game
       print "Would you like to watch another game?  Y/N:   ".center(50).colorize(:red)
       response = gets.chomp
     elsif game_play.to_i == 1
-      print "Would you like to play Robot again?  Y/N:   ".center(50).colorize(:red)
+      print "Would you like to play Erwin again?  Y/N:   ".center(50).colorize(:red)
       response = gets.chomp
     else game_play.to_i == 2
       print "#{@player_1.name} & #{@player_2.name}, would you like to play again?  Y/N:   ".center(50).colorize(:red)
