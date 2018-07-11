@@ -164,13 +164,11 @@ class Game
                     @current_player = @player_1
                     valid_input = true
                     puts "#{player_1_name}, You will go first! ".colorize(:white)
-                    # sleep 1 
                 else 
                    first_player == "2"
                    @current_player = @computer
                    valid_input = true
                    puts "#{player_2_name}, You will go first! ".colorize(:white)
-                   # sleep 1
                 end
               else
                 puts "\nOops! No spaces allowed. Please choose again.\n".colorize(:red)
@@ -337,10 +335,8 @@ class Game
           cell = @computer.computer_war_games_choice(@board.board, @player_1.marker) 
         elsif @current_player != @computer
           cell = @current_player.get_cell_choice
-          # system "clear" 
         else
           cell = @computer.computer_cell_choice(@board.board, @player_1.marker, @computer.marker)
-          # system "clear" 
         end
 
         if @board.within_valid_cell?(cell) && @board.cell_available?(cell)

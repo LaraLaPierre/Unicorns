@@ -2,14 +2,12 @@ class Computer
 attr_accessor :name, :marker
  
   def initialize(name = "Computer", marker)
-    # initialize Computer instance with name and marker 
     raise "Marker must be a Symbol!" unless marker.is_a?(Symbol)
     @name = name
     @marker = marker 
   end
 
   def computer_war_games_choice(board, opponents_marker)
-    #when two computers play, random cell choices will be made to make each game unique
     available_spaces = []
     board.each do |cell|
       if cell.class == String
@@ -20,7 +18,6 @@ attr_accessor :name, :marker
   end 
 
   def computer_cell_choice(board, opponents_marker, computers_marker) 
-    # logic for strategy to choose best cell  
     cell = nil
     cell = center_space(board) 
     if cell != nil
@@ -45,7 +42,6 @@ attr_accessor :name, :marker
   end 
 
   def center_space(board)
-    #choose center cell
     cell = nil 
       if board[4] == "4"
         cell = 4 
@@ -100,7 +96,6 @@ attr_accessor :name, :marker
   end 
 
   def corner_space(board)
-    #choose corner cell
     cell = nil 
       if board[0] == "0"
         cell = 0
@@ -114,7 +109,6 @@ attr_accessor :name, :marker
   end 
 
   def winning_move(board, computers_marker)
-    #choose the cell to complete a winning combo
     cell = nil 
     if board[0] == computers_marker && board[1] == computers_marker && board[2].class != Symbol
       cell = 2
