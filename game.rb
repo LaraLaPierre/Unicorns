@@ -6,7 +6,6 @@ require "colorize"
  
 class Game
   def initialize
-    #display welcome message and call game_setup method
     system "clear"
 
     puts "=".colorize(:white) * 60
@@ -16,9 +15,7 @@ class Game
 
   def game_setup
     puts "\n\nPlease choose the number of players:\n \n (0) Computer vs. Computer\n (1) Human vs. Computer\n (2) Human vs. Human\n".colorize(:white)
-    
     @game_play = gets.chomp
-
     if @game_play == "0"
       system "clear"
       
@@ -82,9 +79,7 @@ class Game
 
     elsif @game_play == "1"
       system "clear"
-      
       puts "\n\n\nYou've chosen to play against the Erwin Computer!\n".colorize(:blue)
-
       valid_input = false
       until valid_input == true 
         print "Player 1, please enter your name.  ".colorize(:white)
@@ -158,17 +153,42 @@ class Game
       @current_player = @player_1
       system "clear"
       
-      puts "\n\n#{@player_1.name} and #{@computer.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@computer.name}".colorize(:white)
-
-      first_player = gets.chomp.to_i
-
-        if first_player == 1
-          @current_player = @player_1
-        elsif 
-          first_player == 2
-          @current_player = @computer
-        end 
-
+      valid_input = false
+      until valid_input == true 
+        puts "\n\n#{@player_1.name} and #{@computer.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@computer.name}".colorize(:white)
+        first_player = gets.chomp
+          if first_player.length == 1
+            if first_player.include? "1" || "2"
+              if !first_player.include? " "
+                if first_player == "1"
+                    @current_player = @player_1
+                    valid_input = true
+                    puts "#{player_1_name}, You will go first! ".colorize(:white)
+                    # sleep 1 
+                else 
+                   first_player == "2"
+                   @current_player = @computer
+                   valid_input = true
+                   puts "#{player_2_name}, You will go first! ".colorize(:white)
+                   # sleep 1
+                end
+              else
+                puts "\nOops! No spaces allowed. Please choose again.\n".colorize(:red)
+                sleep 1
+                system "clear"
+              end
+            else
+              system "clear"
+              puts "Oops! Only numbers 1 or 2 allowed. Try again.".colorize(:red) 
+              sleep 1
+              
+            end
+          else
+            puts "\nOops! Choose one number only. Please choose again. \n".colorize(:red)
+            sleep 1
+            system "clear"
+          end
+        end
       sleep 1
       
     elsif @game_play == "2"
@@ -327,18 +347,15 @@ class Game
            good_cell_choice = true
         end 
       end
-        puts 
-        puts 
+        puts "\n\n" 
         @board.add_marker(cell, @current_player.marker)
         puts "=".colorize(:white) * 50 
         puts "U P D A T E D  B O A R D".center(50).colorize(:green)
         puts "#{@current_player.name} chose ##{cell}".center(50).colorize(:blue)
         puts "=".colorize(:white) * 50 
-        puts  
-        puts
+        puts "\n\n"  
         @board.render
-        puts 
-        puts 
+        puts "\n\n" 
         if check_game_over
           break
         end 
