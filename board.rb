@@ -25,7 +25,6 @@ class Board
         return true
     else
       puts "\nOops! That cell number does not exist, try again!\n\n".colorize(:red)
-      sleep 1
       return false
     end
   end
@@ -35,7 +34,6 @@ class Board
       return true
     else
       puts "\nOops! There is already a marker there, try again!\n\n".colorize(:red)
-      sleep 1
       return false
     end
   end

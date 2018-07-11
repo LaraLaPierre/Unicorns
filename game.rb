@@ -405,40 +405,49 @@ class Game
   end
 
   def play_again(game_play)
-    if game_play.to_i == 0
-      print "Would you like to watch another game?  Y/N:   ".center(50).colorize(:red)
-      response = gets.chomp
-    elsif game_play.to_i == 1
-      print "Would you like to play Erwin again?  Y/N:   ".center(50).colorize(:red)
-      response = gets.chomp
-    else game_play.to_i == 2
-      print "#{@player_1.name} & #{@player_2.name}, would you like to play again?  Y/N:   ".center(50).colorize(:red)
-      response = gets.chomp
+    valid_response = false 
+    until valid_response 
+      if game_play.to_i == 0
+        print "Would you like to watch another game?  Y/N:   ".center(50).colorize(:white)
+        response = gets.chomp
+      elsif game_play.to_i == 1
+        print "Would you like to play Erwin again?  Y/N:   ".center(50).colorize(:white)
+        response = gets.chomp
+      else game_play.to_i == 2
+        print "#{@player_1.name} & #{@player_2.name}, would you like to play again?  Y/N:   ".center(50).colorize(:white)
+        response = gets.chomp
+      end
+
+      if response.downcase == "y"
+        system "clear" 
+        @game_over = false
+        puts "=".colorize(:white) * 50 
+        puts "N E W  G A M E".center(50).colorize(:blue)
+        puts "=".colorize(:white) * 50 
+        puts
+        start_game
+        valid_response
+      elsif response.downcase == "n"
+        @game_over = true
+        system "clear"
+        puts "=".colorize(:white) * 50 
+        puts "=".colorize(:white) * 50 
+        puts " ".colorize(:white) * 50 
+        puts " ".colorize(:white) * 50
+        puts "Thanks for playing!\n".center(50).colorize(:blue)
+        puts "See you next time for another rousing game of".center(50).colorize(:color => :light_blue, :background => :white)
+        puts "TIC TAC TOE!".center(50).colorize(:color => :light_blue, :background => :white)
+        puts " ".colorize(:white) * 50 
+        puts " ".colorize(:white) * 50
+        puts "=".colorize(:white) * 50 
+        puts "=".colorize(:white) * 50 
+        exit
+        valid_response
+      else 
+        puts "\nOops! Invalid response. Please choose again.\n".center(50).colorize(:red)
+        valid_response = false 
+      end
     end 
-    if response.downcase == "y"
-      system "clear" 
-      @game_over = false
-      puts "=".colorize(:white) * 50 
-      puts "N E W  G A M E".center(50).colorize(:blue)
-      puts "=".colorize(:white) * 50 
-      puts
-      start_game
-    elsif response.downcase == "n"
-      @game_over = true
-      system "clear"
-      puts "=".colorize(:white) * 50 
-      puts "=".colorize(:white) * 50 
-      puts " ".colorize(:white) * 50 
-      puts " ".colorize(:white) * 50
-      puts "Thanks for playing!\n".center(50).colorize(:blue)
-      puts "See you next time for another rousing game of".center(50).colorize(:color => :light_blue, :background => :white)
-      puts "TIC TAC TOE!".center(50).colorize(:color => :light_blue, :background => :white)
-      puts " ".colorize(:white) * 50 
-      puts " ".colorize(:white) * 50
-      puts "=".colorize(:white) * 50 
-      puts "=".colorize(:white) * 50 
-      exit
-    end
   end 
 
 end
