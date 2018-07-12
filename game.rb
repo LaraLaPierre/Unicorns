@@ -22,6 +22,10 @@ class Game
       puts "\n\n\nYou've chosen to watch a game between two computers!!\n".colorize(:blue)
       sleep 1
       
+
+      # valid_marker_input("Optimus Prime", optimus_marker_symbol)
+      # valid_marker_input("DJ Roomba", dj_marker_symbol)
+
       valid_input = false
       until valid_input == true 
         print "Please choose a marker symbol for Optimus Prime. ".colorize(:white)
@@ -80,6 +84,7 @@ class Game
     elsif @game_play == "1"
       system "clear"
       puts "\n\n\nYou've chosen to play against the Erwin Computer!\n".colorize(:blue)
+
       valid_input = false
       until valid_input == true 
         print "Player 1, please enter your name.  ".colorize(:white)
@@ -97,6 +102,10 @@ class Game
       end
       
       system "clear"
+
+      # valid_marker_input("#{player_1_name}", player_1_marker_symbol)
+      # valid_marker_input("Erwin", computer_marker_symbol)
+
 
       valid_input = false
       until valid_input == true 
@@ -156,19 +165,19 @@ class Game
       valid_input = false
       until valid_input == true 
         puts "\n\n#{@player_1.name} and #{@computer.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@computer.name}".colorize(:white)
-        first_player = gets.chomp
-          if first_player.length == 1
-            if first_player.include? "1" || "2"
-              if !first_player.include? " "
-                if first_player == "1"
+        @first_player = gets.chomp
+          if @first_player.length == 1
+            if @first_player.include?("1") || @first_player.include?("2")
+              if !@first_player.include? " "
+                if @first_player == "1"
                     @current_player = @player_1
                     valid_input = true
                     puts "#{player_1_name}, You will go first! ".colorize(:white)
                 else 
-                   first_player == "2"
+                   @first_player == "2"
                    @current_player = @computer
                    valid_input = true
-                   puts "#{player_2_name}, You will go first! ".colorize(:white)
+                   puts "#{@computer.name}, You will go first! ".colorize(:white)
                 end
               else
                 puts "\nOops! No spaces allowed. Please choose again.\n".colorize(:red)
@@ -326,9 +335,9 @@ class Game
 
   def start_game 
     @board = Board.new
+    cells_chosen = []
     until @game_over
       good_cell_choice = false
-
       until good_cell_choice
         @board.render
         if @game_play.to_i == 0
@@ -336,11 +345,12 @@ class Game
         elsif @current_player != @computer
           cell = @current_player.get_cell_choice
         else
-          cell = @computer.computer_cell_choice(@board.board, @player_1.marker, @computer.marker)
+          cell = @computer.computer_cell_choice(@board.board, @player_1.marker, @computer.marker, cells_chosen, @first_player)
         end
 
         if @board.within_valid_cell?(cell) && @board.cell_available?(cell)
            good_cell_choice = true
+           cells_chosen << cell 
         end 
       end
         puts "\n\n" 

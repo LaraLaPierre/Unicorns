@@ -17,28 +17,31 @@ attr_accessor :name, :marker
     cell = available_spaces.sample.to_i
   end 
 
-  def computer_cell_choice(board, opponents_marker, computers_marker) 
+  def computer_cell_choice(board, opponents_marker, computers_marker, cells_chosen, first_player) 
     cell = nil
-    cell = center_space(board) 
-    if cell != nil
-      return cell 
-    end 
-    cell = winning_move(board, computers_marker)
-    if cell != nil
-      return cell 
-    end 
-    cell = block_move(board, opponents_marker)
-    if cell != nil
-      return cell 
+    if first_player == "2"
+      
+      cell = winning_move(board, computers_marker)
+      if cell != nil
+        return cell 
+      end 
+      cell = block_move(board, opponents_marker)
+      if cell != nil
+        return cell 
+      end
+      cell = center_space(board) 
+      if cell != nil
+        return cell 
+      end 
+      cell = take_furthest_corner(board, cells_chosen)
+      if !cells_chosen.include?(cell) && cell != nil
+        return cell
+      end
+      cell = take_opposite_corner(board, cells_chosen)
+      if !cells_chosen.include?(cell)
+        return cell
+      end
     end
-    cell = corner_space(board)
-    if cell != nil
-      return cell 
-    end
-    cell = last_space(board)
-    if cell != nil
-      return cell 
-    end    
   end 
 
   def center_space(board)
@@ -47,6 +50,32 @@ attr_accessor :name, :marker
         cell = 4 
       end
   end
+
+  def take_furthest_corner(board, cells_chosen)
+    cell = nil
+    if cells_chosen.last == 1 
+      cell = 6  
+    elsif cells_chosen.last == 3
+      cell = 8 
+    elsif cells_chosen.last == 5
+      cell = 0 
+    elsif cells_chosen.last == 7
+      cell = 2  
+    end 
+  end 
+
+  def take_opposite_corner(board, cells_chosen)
+    cell = nil
+    if cells_chosen.last == 0 
+      cell = 8  
+    elsif cells_chosen.last == 2
+      cell = 6 
+    elsif cells_chosen.last == 6
+      cell = 2 
+    elsif cells_chosen.last == 8
+      cell = 0 
+    end 
+  end 
 
   def block_move(board, opponents_marker)
     cell = nil
