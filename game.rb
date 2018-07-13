@@ -16,6 +16,7 @@ class Game
   def game_setup
     puts "\n\nPlease choose the number of players:\n \n (0) Computer vs. Computer\n (1) Human vs. Computer\n (2) Human vs. Human\n".colorize(:white)
     @game_play = gets.chomp
+
     if @game_play == "0"
       system "clear"
       
@@ -31,7 +32,7 @@ class Game
         print "Please choose a marker symbol for Optimus Prime. ".colorize(:white)
         optimus_marker_symbol = gets.chomp
           if optimus_marker_symbol.length == 1
-            if optimus_marker_symbol.include? " " 
+            if !optimus_marker_symbol.include? " " 
               puts "\nOops! Your marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
               sleep 3 
               system "clear"
