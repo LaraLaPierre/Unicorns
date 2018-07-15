@@ -71,72 +71,52 @@ class Game
       system "clear"
       puts "\n\n\nYou've chosen to play against the Erwin Computer!\n".colorize(:blue)
 
+      names_chosen = []
       valid_input = false
       until valid_input == true 
         print "Player 1, please enter your name.  ".colorize(:white)
         player_1_name = gets.chomp
-          if player_1_name.length > 1
-            if player_1_name.include? " " 
-              puts "\nOops! Your name cannot contain any spaces. Try again! \n".colorize(:red)
-            else 
-              valid_input = true
-              sleep 1
-            end
-          else
-            puts "\nOops! Your name must be more than one character. Try again! \n".colorize(:red)
+          if validate_user_setup.validate_name(player_1_name, names_chosen)
+            valid_input = true
+            names_chosen << player_1_name
+            puts "\nGreat name!".colorize(:white)
+            sleep 1
+          else 
+            puts "\nOops! Your name must be multiple non-numeric characters, \ncannot be a space and cannot be the same as the opponent's. Try again! \n".colorize(:red)
           end
       end
       
       system "clear"
 
-      # valid_marker_input("#{player_1_name}", player_1_marker_symbol)
-      # valid_marker_input("Erwin", computer_marker_symbol)
-
-
+      symbols_chosen = []
       valid_input = false
       until valid_input == true 
         print "\n\n\n#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
         player_1_marker_symbol = gets.chomp
-          if player_1_marker_symbol.length == 1
-            if player_1_marker_symbol.include? " " 
-              puts "\nOops! A marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
-              sleep 2 
-              system "clear"
-            else 
-              valid_input = true
-              puts "\nGreat Choice!".colorize(:white)
-            end
-          else
-            puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
-            sleep 2
-            system "clear"
-          end
+          if validate_user_setup.validate_symbol(player_1_marker_symbol, symbols_chosen)
+          valid_input = true
+          symbols_chosen << player_1_marker_symbol
+          puts "\nGreat Choice!".colorize(:white)
+          sleep 1
+        else 
+          puts "\nOops! Your marker symbol must be a single non-numeric character, \ncannot be a space and cannot be the same as the opponent's. Try again! \n".colorize(:red)
+        end
       end
+
+      system "clear"
 
       valid_input = false
       until valid_input == true 
         print "\n#{player_1_name}, please choose the marker symbol for Erwin the Computer.  ".colorize(:white)
         computer_marker_symbol = gets.chomp
-          if computer_marker_symbol.length == 1
-            if !computer_marker_symbol.include? " "
-              if computer_marker_symbol != player_1_marker_symbol
-                puts "\nExcellent Choice!".colorize(:white)
-                valid_input = true
-              else
-                puts "\nOops! That marker has already been chosen for #{player_1_name}! Please choose again.\n".colorize(:red)
-                sleep 3
-                system "clear"
-              end
-            else
-              puts "\nOops! A marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
-              sleep 3
-              system "clear"
-            end
-          else
-            puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
-            sleep 3
-            system "clear"
-          end
+          if validate_user_setup.validate_symbol(computer_marker_symbol, symbols_chosen)
+          valid_input = true
+          symbols_chosen << computer_marker_symbol
+          puts "\nGreat Choice!".colorize(:white)
+          sleep 1
+        else 
+          puts "\nOops! Your marker symbol must be a single non-numeric character, \ncannot be a space and cannot be the same as the opponent's. Try again! \n".colorize(:red)
+        end
       end
 
       sleep 1
@@ -152,36 +132,20 @@ class Game
       until valid_input == true 
         puts "\n\n#{@player_1.name} and #{@computer.name}, who wants to go first?  \n\n Select 1 for #{@player_1.name}\n Select 2 for #{@computer.name}".colorize(:white)
         @first_player = gets.chomp
-          if @first_player.length == 1
-            if @first_player.include?("1") || @first_player.include?("2")
-              if !@first_player.include? " "
-                if @first_player == "1"
-                    @current_player = @player_1
-                    valid_input = true
-                    puts "#{player_1_name}, You will go first! ".colorize(:white)
-                else 
-                   @first_player == "2"
-                   @current_player = @computer
-                   valid_input = true
-                   puts "#{@computer.name}, You will go first! ".colorize(:white)
-                end
-              else
-                puts "\nOops! No spaces allowed. Please choose again.\n".colorize(:red)
-                sleep 1
-                system "clear"
-              end
-            else
-              system "clear"
-              puts "Oops! Only numbers 1 or 2 allowed. Try again.".colorize(:red) 
-              sleep 1
-              
-            end
+          if @first_player == "1"
+              @current_player = @player_1
+              valid_input = true
+              puts "#{player_1_name}, You will go first! ".colorize(:white)
+          elsif @first_player == "2"
+             @current_player = @computer
+             valid_input = true
+             puts "#{@computer.name}, You will go first! ".colorize(:white)
           else
-            puts "\nOops! Choose one number only. Please choose again. \n".colorize(:red)
+            puts "\nOops! You can only choose 1 or 2. Please try again.\n".colorize(:red)
             sleep 1
             system "clear"
           end
-        end
+      end
       sleep 1
       
     elsif @game_play == "2"
@@ -316,6 +280,7 @@ class Game
       system "clear"
       
       puts "******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
+      sleep 2 
   end 
 
   def start_game 
