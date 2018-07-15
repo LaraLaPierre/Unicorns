@@ -2,6 +2,8 @@ require_relative "./board"
 require_relative "./player"
 require_relative "./computer"
 require_relative "./validate_cell"
+require_relative "./validate_user_setup"
+
 
 require "colorize"
 
@@ -16,6 +18,8 @@ class Game
   end
 
   def game_setup
+    validate_user_setup = ValidateUserSetup.new
+
     puts "\n\nPlease choose the number of players:\n \n (0) Computer vs. Computer\n (1) Human vs. Computer\n (2) Human vs. Human\n".colorize(:white)
     @game_play = gets.chomp
 
@@ -25,55 +29,34 @@ class Game
       puts "\n\n\nYou've chosen to watch a game between two computers!!\n".colorize(:blue)
       sleep 1
       
-
-      # valid_marker_input("Optimus Prime", optimus_marker_symbol)
-      # valid_marker_input("DJ Roomba", dj_marker_symbol)
-
+      symbols_chosen = []
       valid_input = false
       until valid_input == true 
         print "Please choose a marker symbol for Optimus Prime. ".colorize(:white)
         optimus_marker_symbol = gets.chomp
-          if optimus_marker_symbol.length == 1
-            if optimus_marker_symbol.include? " " 
-              puts "\nOops! Your marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
-              sleep 3 
-              system "clear"
-            else 
-              valid_input = true
-              puts "\nGreat Choice!".colorize(:white)
-              sleep 3
-            end
-          else
-            puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
-            sleep 3 
-            system "clear"
-          end
+
+        if validate_user_setup.validate_symbol(optimus_marker_symbol, symbols_chosen)
+          valid_input = true
+          symbols_chosen << optimus_marker_symbol
+          puts "\nGreat Choice!".colorize(:white)
+          sleep 1
+        else 
+          puts "\nOops! Your marker symbol must be a single non-numeric character, cannot be a space and cannot be the same as the opponent's. Try again! \n".colorize(:red)
+        end
       end
       
       valid_input = false
         until valid_input == true 
         print "\n\nNow please choose a marker symbol for DJ Roomba. ".colorize(:white)
         dj_marker_symbol = gets.chomp
-          if dj_marker_symbol.length == 1
-            if !dj_marker_symbol.include? " "
-              if dj_marker_symbol != optimus_marker_symbol
-                puts "\nExcellent Choice!".colorize(:white)
-                valid_input = true
-                sleep 1
-              else
-                puts "\nOops! That marker has already been chosen for Optimus Prime! Please choose again.\n".colorize(:red)
-                sleep 3
-                system "clear"
-              end
-            else
-              puts "\nOops! A marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
-              sleep 3
-              system "clear"
-            end
-          else
-            puts "\nOops! A marker symbol must be a single character. Please choose again. \n".colorize(:red)
-            sleep 3
-            system "clear"
+
+          if validate_user_setup.validate_symbol(dj_marker_symbol, symbols_chosen)
+            valid_input = true
+            symbols_chosen << dj_marker_symbol
+            puts "\nGreat Choice!".colorize(:white)
+            sleep 1
+          else 
+            puts "\nOops! Your marker symbol must be a single non-numeric character, \ncannot be a space and cannot be the same as the opponent's. Try again! \n".colorize(:red)
           end
         end
 

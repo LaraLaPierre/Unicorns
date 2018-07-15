@@ -21,10 +21,4 @@ class ValidateCell
   end
 
 
-
-
-
-
-
-
 end
