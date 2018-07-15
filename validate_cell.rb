@@ -6,7 +6,6 @@ class ValidateCell
       else
         return false
       end
-    else
   end
 
   def cell_available?(current_board, cell)

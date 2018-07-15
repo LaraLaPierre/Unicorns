@@ -34,7 +34,7 @@ class Game
         print "Please choose a marker symbol for Optimus Prime. ".colorize(:white)
         optimus_marker_symbol = gets.chomp
           if optimus_marker_symbol.length == 1
-            if !optimus_marker_symbol.include? " " 
+            if optimus_marker_symbol.include? " " 
               puts "\nOops! Your marker symbol cannot contain any spaces. Try again! \n".colorize(:red)
               sleep 3 
               system "clear"
@@ -347,7 +347,7 @@ class Game
           cell = @computer.computer_war_games_choice(@board.board, @player_1.marker) 
         elsif @current_player != @computer
           print "\n\n#{@current_player.name}(#{@current_player.marker}), choose a cell number between 0 and 8:  \n".colorize(:white)
-          cell = @current_player.get_cell_choice
+          cell = gets.chomp
         else
           print "\n\n#{@computer.name}(#{@computer.marker}), choose a cell number between 0 and 8:  \n".colorize(:white)
           cell = @computer.computer_cell_choice(@board.board, @player_1.marker, @computer.marker, cells_chosen, @first_player)
@@ -371,7 +371,7 @@ class Game
       end
 
         puts "\n\n" 
-        @board.add_marker(cell, @current_player.marker)
+        @current_player.add_marker(@board.board, cell, @current_player.marker)
         puts "=".colorize(:white) * 50 
         puts "U P D A T E D  B O A R D".center(50).colorize(:green)
         puts "#{@current_player.name} chose ##{cell}".center(50).colorize(:blue)
