@@ -1,5 +1,7 @@
 require_relative "./computer"
 require_relative "./board"
+require_relative "./validate_cell"
+
 
  
 class Player
@@ -11,21 +13,7 @@ class Player
     @marker = marker
   end
 
-  def get_cell_choice
-    valid_input = false
-    until valid_input  
-      print "\n\n#{@name}(#{@marker}), choose a cell number between 0 and 8:  \n".colorize(:white)
-      cell = gets.chomp
-        if is_numeric?(cell) 
-          valid_input = true
-        else 
-          puts "\nOops! The cell choice must be a number. Try again. ".colorize(:red)
-        end
-    end
-    return cell.to_i
-  end
-
-  def is_numeric?(cell)
-    !!Float(cell) rescue false
+  def get_cell_choice  
+    cell = gets.chomp
   end
 end 

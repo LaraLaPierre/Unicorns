@@ -1,6 +1,8 @@
 require_relative "./board"
 require_relative "./player"
 require_relative "./computer"
+require_relative "./validate_cell"
+
 require "colorize"
 
  
@@ -335,6 +337,7 @@ class Game
 
   def start_game 
     @board = Board.new
+    validate_cell = ValidateCell.new
     cells_chosen = []
     until @game_over
       good_cell_choice = false
@@ -343,16 +346,30 @@ class Game
         if @game_play.to_i == 0
           cell = @computer.computer_war_games_choice(@board.board, @player_1.marker) 
         elsif @current_player != @computer
+          print "\n\n#{@current_player.name}(#{@current_player.marker}), choose a cell number between 0 and 8:  \n".colorize(:white)
           cell = @current_player.get_cell_choice
         else
+          print "\n\n#{@computer.name}(#{@computer.marker}), choose a cell number between 0 and 8:  \n".colorize(:white)
           cell = @computer.computer_cell_choice(@board.board, @player_1.marker, @computer.marker, cells_chosen, @first_player)
         end
 
-        if within_valid_cell?(@board.board, cell) && cell_available?(@board.board, cell)
-           good_cell_choice = true
-           cells_chosen << cell 
+        if validate_cell.is_numeric?(cell)
+          cell = cell.to_i
+          if validate_cell.within_valid_cell?(@board.board, cell) 
+            if validate_cell.cell_available?(@board.board, cell)
+              good_cell_choice = true
+              cells_chosen << cell 
+            else
+              puts "\nOops! There is already a marker there, try again!\n\n".colorize(:red)
+            end
+          else
+            puts "\nOops! That cell number does not exist, try again!\n\n".colorize(:red)
+          end 
+        else
+          puts "\nOops! The cell choice must be a number. Try again. ".colorize(:red)
         end 
       end
+
         puts "\n\n" 
         @board.add_marker(cell, @current_player.marker)
         puts "=".colorize(:white) * 50 
@@ -472,24 +489,6 @@ class Game
       end
     end 
   end 
-
-  def within_valid_cell?(current_board, cell)
-    if (0..8).include?(cell) 
-        return true
-    else
-      puts "\nOops! That cell number does not exist, try again!\n\n".colorize(:red)
-      return false
-    end
-  end
-
-  def cell_available?(current_board, cell)
-    if current_board[cell].class != Symbol 
-      return true
-    else
-      puts "\nOops! There is already a marker there, try again!\n\n".colorize(:red)
-      return false
-    end
-  end
 
   def winning_combination?(current_board)
     [current_board[0], current_board[1], current_board[2]].uniq.length == 1 ||
