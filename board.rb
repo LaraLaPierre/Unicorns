@@ -20,36 +20,36 @@ class Board
     @board[cell] = marker   
   end
 
-  def within_valid_cell?(cell)
-    if (0..8).include?(cell) 
-        return true
-    else
-      puts "\nOops! That cell number does not exist, try again!\n\n".colorize(:red)
-      return false
-    end
-  end
+  # def within_valid_cell?(cell)
+  #   if (0..8).include?(cell) 
+  #       return true
+  #   else
+  #     puts "\nOops! That cell number does not exist, try again!\n\n".colorize(:red)
+  #     return false
+  #   end
+  # end
 
-  def cell_available?(cell)
-    if @board[cell].class != Symbol 
-      return true
-    else
-      puts "\nOops! There is already a marker there, try again!\n\n".colorize(:red)
-      return false
-    end
-  end
+  # def cell_available?(cell)
+  #   if @board[cell].class != Symbol 
+  #     return true
+  #   else
+  #     puts "\nOops! There is already a marker there, try again!\n\n".colorize(:red)
+  #     return false
+  #   end
+  # end
 
-  def winning_combination?
-    [board[0], board[1], board[2]].uniq.length == 1 ||
-    [board[3], board[4], board[5]].uniq.length == 1 ||
-    [board[6], board[7], board[8]].uniq.length == 1 ||
-    [board[0], board[3], board[6]].uniq.length == 1 ||
-    [board[1], board[4], board[7]].uniq.length == 1 ||
-    [board[2], board[5], board[8]].uniq.length == 1 ||
-    [board[0], board[4], board[8]].uniq.length == 1 ||
-    [board[2], board[4], board[6]].uniq.length == 1
-  end
+  # def winning_combination?
+  #   [board[0], board[1], board[2]].uniq.length == 1 ||
+  #   [board[3], board[4], board[5]].uniq.length == 1 ||
+  #   [board[6], board[7], board[8]].uniq.length == 1 ||
+  #   [board[0], board[3], board[6]].uniq.length == 1 ||
+  #   [board[1], board[4], board[7]].uniq.length == 1 ||
+  #   [board[2], board[5], board[8]].uniq.length == 1 ||
+  #   [board[0], board[4], board[8]].uniq.length == 1 ||
+  #   [board[2], board[4], board[6]].uniq.length == 1
+  # end
 
-  def full?
-    @board.select{|cell| cell.class == Symbol }.length == 9
-  end
+  # def full?
+  #   @board.select{|cell| cell.class == Symbol }.length == 9
+  # end
 end 

@@ -333,7 +333,6 @@ class Game
       puts "******  Let the game begin!  *****\n\n" .center(50).colorize(:blue)
   end 
 
-
   def start_game 
     @board = Board.new
     cells_chosen = []
@@ -349,7 +348,7 @@ class Game
           cell = @computer.computer_cell_choice(@board.board, @player_1.marker, @computer.marker, cells_chosen, @first_player)
         end
 
-        if @board.within_valid_cell?(cell) && @board.cell_available?(cell)
+        if within_valid_cell?(@board.board, cell) && cell_available?(@board.board, cell)
            good_cell_choice = true
            cells_chosen << cell 
         end 
@@ -379,16 +378,15 @@ class Game
       end
   end
 
-
   def check_game_over
-    if check_victory(@board) || check_draw(@board)
+    if check_victory(@board.board) || check_draw(@board.board)
       puts
       play_again(@game_play)
     end 
   end
 
   def check_victory(current_board)
-    if current_board.winning_combination? == true
+    if winning_combination?(current_board) == true
       puts "=".colorize(:white) * 50 
       puts "Congratulations #{@current_player.name}, you win!".center(50).colorize(:color => :light_blue, :background => :white).blink
       puts "G A M E  O V E R".center(50).colorize(:color => :light_blue, :background => :white)
@@ -400,7 +398,7 @@ class Game
   end
 
   def check_draw(current_board)
-    if current_board.full?
+    if full?(current_board)
       puts "=".colorize(:white) * 50 
       puts "Game ends with a tie!".center(50).colorize(:color => :light_blue, :background => :white).blink
       puts "G A M E  O V E R".center(50).colorize(:color => :light_blue, :background => :white)
@@ -474,6 +472,39 @@ class Game
       end
     end 
   end 
+
+  def within_valid_cell?(current_board, cell)
+    if (0..8).include?(cell) 
+        return true
+    else
+      puts "\nOops! That cell number does not exist, try again!\n\n".colorize(:red)
+      return false
+    end
+  end
+
+  def cell_available?(current_board, cell)
+    if current_board[cell].class != Symbol 
+      return true
+    else
+      puts "\nOops! There is already a marker there, try again!\n\n".colorize(:red)
+      return false
+    end
+  end
+
+  def winning_combination?(current_board)
+    [current_board[0], current_board[1], current_board[2]].uniq.length == 1 ||
+    [current_board[3], current_board[4], current_board[5]].uniq.length == 1 ||
+    [current_board[6], current_board[7], current_board[8]].uniq.length == 1 ||
+    [current_board[0], current_board[3], current_board[6]].uniq.length == 1 ||
+    [current_board[1], current_board[4], current_board[7]].uniq.length == 1 ||
+    [current_board[2], current_board[5], current_board[8]].uniq.length == 1 ||
+    [current_board[0], current_board[4], current_board[8]].uniq.length == 1 ||
+    [current_board[2], current_board[4], current_board[6]].uniq.length == 1
+  end
+
+  def full?(current_board)
+    current_board.select{|cell| cell.class == Symbol }.length == 9
+  end
 
 end
 
