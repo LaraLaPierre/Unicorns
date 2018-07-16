@@ -1,5 +1,7 @@
 require_relative "./player"
 require_relative "./computer"
+require_relative "./validate_cell"
+
 
  
 class Board
@@ -15,6 +17,4 @@ class Board
     puts "===+===+===".center(50).colorize(:color => :black, :background => :white)                             
     puts "#{@board[6]} | #{@board[7]} | #{@board[8]}".center(50).colorize(:color => :black, :background => :white)
   end 
-
-  
 end 

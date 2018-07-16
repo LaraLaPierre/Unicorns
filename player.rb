@@ -18,13 +18,6 @@ end
 
 class Computer < Player 
 attr_accessor :name, :marker
- 
-  # def initialize(name, marker)
-  #   raise "Marker must be a Symbol!" unless marker.is_a?(Symbol)
-  #   @name = name
-  #   @marker = marker 
-  # end
-
   def computer_war_games_choice(board, opponents_marker)
     available_spaces = []
     board.each do |cell|

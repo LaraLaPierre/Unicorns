@@ -27,7 +27,6 @@ class Game
       system "clear"
       
       puts "\n\n\nYou've chosen to watch a game between two computers!!\n".colorize(:blue)
-      sleep 1
       
       symbols_chosen = []
       valid_input = false
@@ -35,7 +34,7 @@ class Game
         print "Please choose a marker symbol for Optimus Prime. ".colorize(:white)
         optimus_marker_symbol = gets.chomp
 
-        if validate_user_setup.validate_symbol(optimus_marker_symbol, symbols_chosen)
+        if validate_user_setup.valid_symbol?(optimus_marker_symbol, symbols_chosen)
           valid_input = true
           symbols_chosen << optimus_marker_symbol
           puts "\nGreat Choice!".colorize(:white)
@@ -45,12 +44,13 @@ class Game
         end
       end
       
+      system "clear"
       valid_input = false
         until valid_input == true 
         print "\n\nNow please choose a marker symbol for DJ Roomba. ".colorize(:white)
         dj_marker_symbol = gets.chomp
 
-          if validate_user_setup.validate_symbol(dj_marker_symbol, symbols_chosen)
+          if validate_user_setup.valid_symbol?(dj_marker_symbol, symbols_chosen)
             valid_input = true
             symbols_chosen << dj_marker_symbol
             puts "\nGreat Choice!".colorize(:white)
@@ -63,10 +63,13 @@ class Game
       @computer = Computer.new("Optimus Prime", optimus_marker_symbol.to_sym)
       @player_1 = Computer.new("DJ Roomba", dj_marker_symbol.to_sym)
       
+      system "clear"
       puts "\nEnjoy watching the game between #{@computer.name}(#{@computer.marker}) and their opponent, #{@player_1.name}(#{@player_1.marker})!".colorize(:white)
       @current_player = @player_1
-      sleep 4
-
+      sleep 2
+      puts "\n\n        ******  Let the game begin!  *****\n\n".center(50).colorize(:blue)
+      sleep 1
+      
     elsif @game_play == "1"
       system "clear"
       puts "\n\n\nYou've chosen to play against the Erwin Computer!\n".colorize(:blue)
@@ -76,7 +79,7 @@ class Game
       until valid_input == true 
         print "Player 1, please enter your name.  ".colorize(:white)
         player_1_name = gets.chomp
-          if validate_user_setup.validate_name(player_1_name, names_chosen)
+          if validate_user_setup.valid_name?(player_1_name, names_chosen)
             valid_input = true
             names_chosen << player_1_name
             puts "\nGreat name!".colorize(:white)
@@ -93,7 +96,7 @@ class Game
       until valid_input == true 
         print "\n\n\n#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
         player_1_marker_symbol = gets.chomp
-          if validate_user_setup.validate_symbol(player_1_marker_symbol, symbols_chosen)
+          if validate_user_setup.valid_symbol?(player_1_marker_symbol, symbols_chosen)
           valid_input = true
           symbols_chosen << player_1_marker_symbol
           puts "\nGreat Choice!".colorize(:white)
@@ -109,7 +112,7 @@ class Game
       until valid_input == true 
         print "\n#{player_1_name}, please choose the marker symbol for Erwin the Computer.  ".colorize(:white)
         computer_marker_symbol = gets.chomp
-          if validate_user_setup.validate_symbol(computer_marker_symbol, symbols_chosen)
+          if validate_user_setup.valid_symbol?(computer_marker_symbol, symbols_chosen)
           valid_input = true
           symbols_chosen << computer_marker_symbol
           puts "\nGreat Choice!".colorize(:white)
@@ -118,8 +121,6 @@ class Game
           puts "\nOops! Your marker symbol must be a single non-numeric character, \ncannot be a space and cannot be the same as the opponent's. Try again! \n".colorize(:red)
         end
       end
-
-      sleep 1
 
       @computer = Computer.new("Erwin", computer_marker_symbol.to_sym)
       @player_1 = Player.new(player_1_name, player_1_marker_symbol.to_sym)
@@ -158,7 +159,7 @@ class Game
       until valid_input == true 
         print "\nPlayer 1, please enter your name.  ".colorize(:white)
         player_1_name = gets.chomp
-          if validate_user_setup.validate_name(player_1_name, names_chosen)
+          if validate_user_setup.valid_name?(player_1_name, names_chosen)
             valid_input = true
             names_chosen << player_1_name
             puts "\nGreat name!".colorize(:white)
@@ -174,7 +175,7 @@ class Game
       until valid_input == true 
        print "\n#{player_1_name}, enter your desired marker symbol.  ".colorize(:white)
         player_1_marker_symbol = gets.chomp
-        if validate_user_setup.validate_symbol(player_1_marker_symbol, symbols_chosen)
+        if validate_user_setup.valid_symbol?(player_1_marker_symbol, symbols_chosen)
           valid_input = true
           symbols_chosen << player_1_marker_symbol
           puts "\nGreat Choice!".colorize(:white)
@@ -189,7 +190,7 @@ class Game
       until valid_input == true 
         print "\nPlayer 2, please enter your name.  ".colorize(:white)
         player_2_name = gets.chomp
-          if validate_user_setup.validate_name(player_2_name, names_chosen)
+          if validate_user_setup.valid_name?(player_2_name, names_chosen)
             valid_input = true
             names_chosen << player_2_name
             puts "\nGreat name!".colorize(:white)
@@ -204,7 +205,7 @@ class Game
       until valid_input == true 
         print "\n#{player_2_name}, please choose your desired marker symbol .  ".colorize(:white)
         player_2_marker_symbol = gets.chomp
-        if validate_user_setup.validate_symbol(player_2_marker_symbol, symbols_chosen)
+        if validate_user_setup.valid_symbol?(player_2_marker_symbol, symbols_chosen)
           valid_input = true
           symbols_chosen << player_2_marker_symbol
           puts "\nGreat Choice!".colorize(:white)
@@ -247,7 +248,6 @@ class Game
       end
       
       puts "\n\n        ******  Let the game begin!  *****\n\n".center(50).colorize(:blue)
-      sleep 2
     end 
   end 
 
@@ -271,7 +271,7 @@ class Game
 
         if validate_cell.is_numeric?(cell)
           cell = cell.to_i
-          if validate_cell.within_valid_cell?(@board.board, cell) 
+          if validate_cell.within_valid_cell?(cell) 
             if validate_cell.cell_available?(@board.board, cell)
               good_cell_choice = true
               cells_chosen << cell 
@@ -376,7 +376,19 @@ class Game
       if response.downcase == "y"
         system "clear" 
         @game_over = false
-        switch_players(@game_play)
+        if game_play.to_i == 0 || game_play.to_i == 1
+          if @first_player == "1"
+              @current_player = @player_1
+          elsif @first_player == "2"
+             @current_player = @computer
+          end
+        elsif game_play.to_i == 2
+          if @first_player == "1"
+              @current_player = @player_1
+          elsif @first_player == "2"
+             @current_player = @player_2
+          end
+        end 
         puts "=".colorize(:white) * 50 
         puts "N E W  G A M E".center(50).colorize(:blue)
         puts "=".colorize(:white) * 50 
