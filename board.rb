@@ -1,9 +1,3 @@
-require_relative "./player"
-require_relative "./computer"
-require_relative "./validate_cell"
-
-
- 
 class Board
   attr_accessor :board
   def initialize

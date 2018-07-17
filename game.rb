@@ -1,6 +1,5 @@
 require_relative "./board"
 require_relative "./player"
-require_relative "./computer"
 require_relative "./validate_cell"
 require_relative "./validate_user_setup"
 
@@ -147,6 +146,8 @@ class Game
             system "clear"
           end
       end
+      sleep 2
+      puts "\n\n        ******  Let the game begin!  *****\n\n".center(50).colorize(:blue)
       sleep 1
       
     elsif @game_play == "2"

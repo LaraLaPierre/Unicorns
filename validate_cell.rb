@@ -1,4 +1,6 @@
+require_relative "./player"
 require_relative "./board"
+
 require "colorize"
 
 class ValidateCell
@@ -11,7 +13,7 @@ class ValidateCell
       end
   end
 
-  def cell_available?(current_board, cell)
+  def cell_available?(current_board, cell) 
     if current_board[cell].class != Symbol 
       return true
     else
@@ -45,7 +47,7 @@ else
 end
 
 puts "Testing #is_numeric? for return of true"
-if validate_cell.is_numeric?(2) == true
+if validate_cell.is_numeric?("2") == true
   puts "Test Passes"
 else 
   puts "Test Fails".colorize(:red)
@@ -60,10 +62,10 @@ end
 
 
 # puts "Testing #cell_available for return of true"
-# validate_cell = ValidateCell.new
 # @board = Board.new
-# # @board[3] == "3"
-# if validate_cell.cell_available?(@board, 3) == true
+# validate_cell = ValidateCell.new
+
+# if validate_cell.cell_available?(@board.board, 3) == true
 #   puts "Test Passes"
 # else 
 #   puts "Test Fails"
@@ -73,7 +75,7 @@ end
 # validate_cell = ValidateCell.new
 # @board = Board.new
 # @board[3] == :X
-# if validate_cell.cell_available?(board, 3) == false
+# if validate_cell.cell_available?(@board.board, 3) == false
 #   puts "Test Passes"
 # else 
 #   puts "Test Fails"
